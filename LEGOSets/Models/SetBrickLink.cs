@@ -17,12 +17,11 @@ namespace LEGOSets.Models
 
         }
 
-        public SetBrickLink(LEGOBrick legoBrick, LEGOSet legoSet, int amount, int setBrickLinkID)
+        public SetBrickLink(LEGOSet legoSet, LEGOBrick legoBrick, int amount)
         {
             this.legoBrick = legoBrick;
             this.legoSet = legoSet;
             this.amount = amount;
-            this.setBrickLinkID = setBrickLinkID;
         }
 
         public LEGOBrick LegoBrick { get => legoBrick; set => legoBrick = value; }

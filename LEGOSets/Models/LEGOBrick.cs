@@ -28,11 +28,10 @@ namespace LEGOSets.Models
                 
         }
 
-        public LEGOBrick(string description, int designNumber, int legoBrickID, Color color)
+        public LEGOBrick(string description, int designNumber, Color color)
         {
             this.description = description;
             this.designNumber = designNumber;
-            this.legoBrickID = legoBrickID;
             this.color = color;
         }
 
