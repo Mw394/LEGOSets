@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Model;
-using DataAccess.Model.DBContext;
+using DataAccess.DBContext;
 using DataAccess.Mapper;
 using DTO.Model;
 
@@ -27,6 +27,14 @@ namespace DataAccess.Repository
             {
                 ctx.LEGOSets.Add(LEGOSetMapper.Map(LEGOSet));
                 ctx.SaveChanges();
+            }
+        }
+
+        public static List<DTOLEGOSet> GetLEGOSets()
+        {
+            using(LEGODBContext ctx = new LEGODBContext())
+            {
+                return LEGOSetMapper.Map(ctx.LEGOSets.ToList<LEGOSet>());
             }
         }
 

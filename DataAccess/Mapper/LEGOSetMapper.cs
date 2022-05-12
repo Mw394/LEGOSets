@@ -19,5 +19,15 @@ namespace DataAccess.Mapper
         {
             return new LEGOSet(LEGOSet.LEGOSetName, LEGOSet.LEGOSetNumber, LEGOSet.Discontinued, LEGOSet.InStorage);
         }
+
+        public static List<DTO.Model.DTOLEGOSet> Map(List<LEGOSet> LEGOSets)
+        {
+            List<DTO.Model.DTOLEGOSet> legoSets = new List<DTO.Model.DTOLEGOSet>();
+            foreach (var legoSet in LEGOSets)
+            {
+                legoSets.Add(Map(legoSet));
+            }
+            return legoSets;
+        }
     }
 }

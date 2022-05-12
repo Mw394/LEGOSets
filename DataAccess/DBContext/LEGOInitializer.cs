@@ -4,8 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using DTO.Model;
+using DataAccess.Model;
 
-namespace DataAccess.Model.DBContext
+namespace DataAccess.DBContext
 {
     internal class LEGOInitializer : DropCreateDatabaseAlways<LEGODBContext>
     {
