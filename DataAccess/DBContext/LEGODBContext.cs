@@ -5,9 +5,9 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
-namespace LEGOSets.Models.DBContext
+namespace DataAccess.Model.DBContext
 {
-    public class LEGODBContext : DbContext
+    internal class LEGODBContext : DbContext
     {
 
         public LEGODBContext() : base("LEGOConnection")

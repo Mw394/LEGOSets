@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace LEGOSets.Models
+namespace DataAccess.Model
 {
-    public class SetBrickLink
+    internal class SetBrickLink
     {
         private LEGOBrick legoBrick;
         private LEGOSet legoSet;
@@ -24,8 +24,8 @@ namespace LEGOSets.Models
             this.amount = amount;
         }
 
-        public LEGOBrick LegoBrick { get => legoBrick; set => legoBrick = value; }
-        public LEGOSet LegoSet { get => legoSet; set => legoSet = value; }
+        public LEGOBrick LEGOBrick { get => legoBrick; set => legoBrick = value; }
+        public LEGOSet LEGOSet { get => legoSet; set => legoSet = value; }
         public int Amount { get => amount; set => amount = value; }
         public int SetBrickLinkID { get => setBrickLinkID; set => setBrickLinkID = value; }
     }

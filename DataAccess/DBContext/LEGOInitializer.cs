@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using DTO.Model;
 
-namespace LEGOSets.Models.DBContext
+namespace DataAccess.Model.DBContext
 {
-    public class LEGOInitializer : DropCreateDatabaseAlways<LEGODBContext>
+    internal class LEGOInitializer : DropCreateDatabaseAlways<LEGODBContext>
     {
 
         protected override void Seed(LEGODBContext context)
@@ -39,28 +40,28 @@ namespace LEGOSets.Models.DBContext
             context.LEGOBricks.Add(tire);
 
             var LEGOset1 = new LEGOSet("Firetruck", "001", false, true);
-            LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x4White, 10));
-            LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x2White, 5));
-            LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick1x4White, 6));
-            LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick1x2White, 2));
-            LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x4Red, 10));
-            LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x2Red, 5));
-            LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick1x4Red, 8));
-            LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick1x2Red, 2));
-            LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, tire, 4));
+            //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x4White, 10));
+            //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x2White, 5));
+            //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick1x4White, 6));
+            //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick1x2White, 2));
+            //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x4Red, 10));
+            //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x2Red, 5));
+            //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick1x4Red, 8));
+            //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick1x2Red, 2));
+            //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, tire, 4));
             context.LEGOSets.Add(LEGOset1);
 
 
             var LEGOset2 = new LEGOSet("002", "Policecar", false, true);
-            LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick2x4White, 8));
-            LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick2x2White, 4));
-            LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick1x4White, 3));
-            LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick1x2White, 2));
-            LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick2x4Blue, 8));
-            LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick2x2Blue, 6));
-            LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick1x4Blue, 4));
-            LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick1x2Blue, 4));
-            LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, tire, 4));
+            //LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick2x4White, 8));
+            //LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick2x2White, 4));
+            //LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick1x4White, 3));
+            //LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick1x2White, 2));
+            //LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick2x4Blue, 8));
+            //LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick2x2Blue, 6));
+            //LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick1x4Blue, 4));
+            //LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, brick1x2Blue, 4));
+            //LEGOset2.SetBrickLinks.Add(new SetBrickLink(LEGOset2, tire, 4));
             context.LEGOSets.Add(LEGOset2);
 
             context.SaveChanges();

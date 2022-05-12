@@ -2,21 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DTO.Model;
 
-namespace LEGOSets.Models
+namespace DataAccess.Model
 {
-    public enum Color{
-        White,
-        Black,
-        Red,
-        Green,
-        Blue,
-        Yellow,
-        Purple,
-    }
 
-
-    public class LEGOBrick
+    internal class LEGOBrick
     {
         private string description;
         private int designNumber;
@@ -37,7 +28,7 @@ namespace LEGOSets.Models
 
         public string Description { get => description; set => description = value; }
         public int DesignNumber { get => designNumber; set => designNumber = value; }
-        public int LegoBrickID { get => legoBrickID; set => legoBrickID = value; }
+        public int LEGOBrickID { get => legoBrickID; set => legoBrickID = value; }
         public Color Color { get => color; set => color = value; }
     }
 }
