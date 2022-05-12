@@ -40,7 +40,7 @@ namespace DataAccess.DBContext
             context.LEGOBricks.Add(brick1x2Blue);
             context.LEGOBricks.Add(tire);
 
-            var LEGOset1 = new LEGOSet("Firetruck", "001", false, true);
+            var LEGOset1 = new LEGOSet("002", "Firetruck", false, true);
             //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x4White, 10));
             //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick2x2White, 5));
             //LEGOset1.SetBrickLinks.Add(new SetBrickLink(LEGOset1, brick1x4White, 6));
