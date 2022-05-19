@@ -28,13 +28,13 @@ namespace DTO.Model
 
         public DTOLEGOBrick(string desciprtion, int designNumber, int legoBrickID, Color color)
         {
-            Desciprtion = desciprtion;
+            Description = desciprtion;
             DesignNumber = designNumber;
             LEGOBrickID = legoBrickID;
             Color = color;
         }
 
-        public string Desciprtion { get; set; }
+        public string Description { get; set; }
 
         public int DesignNumber { get; set; }
 

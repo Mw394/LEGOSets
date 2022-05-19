@@ -26,5 +26,25 @@ namespace BusinessLogic.BLL
         {
             return LEGORepository.GetLEGOSets();
         }
+
+        public List<DTOLEGOBrick> GetLEGOBricks()
+        {
+            return LEGORepository.GetLEGOBricks();
+        }
+
+        public void AddLEGOBrick(DTOLEGOBrick LEGOBrick)
+        {
+            LEGORepository.AddLEGOBrick(LEGOBrick);
+        }
+
+        public void UpdateLEGOBrick(DTOLEGOBrick LEGOBrick)
+        {
+            LEGORepository.UpdateLEGOBrick(LEGOBrick);
+        }
+
+        public DTOLEGOBrick GetLEGOBrick(int id)
+        {
+            return LEGORepository.GetLEGOBrick(id);
+        }
     }
 }

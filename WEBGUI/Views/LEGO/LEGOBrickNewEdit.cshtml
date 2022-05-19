@@ -1,0 +1,42 @@
+﻿
+@using DTO.Model
+@model DTOLEGOBrick
+@{
+    ViewBag.Title = "LEGOBrickNewEdit";
+}
+
+<h1>LEGO Brick NewEdit</h1>
+<div>
+    @if (ViewBag.Update)
+    {
+        using (Html.BeginForm("UpdateLEGOBrick", "LEGO", FormMethod.Post))
+        {
+            <label>ID</label>
+            @Html.TextBox("legoBrickID", Model.LEGOBrickID) <br />
+            <label>Description</label>
+            @Html.TextBox("description", Model.Description) <br />
+            <label>Design Number</label>
+            @Html.TextBox("designNumber", Model.DesignNumber) <br />
+            <label>Color</label>
+            @Html.EnumDropDownListFor(x => x.Color) <br />
+            <input type="submit" />
+        }
+    }
+    else
+    {
+        using (Html.BeginForm("CreateLEGOBrick", "LEGO", FormMethod.Post))
+        {
+            <label>ID</label>
+            @Html.TextBox("legoBrickID", Model.LEGOBrickID) <br />
+            <label>Description</label>
+            @Html.TextBox("description", Model.Description) <br />
+            <label>Design Number</label>
+            @Html.TextBox("designNumber", Model.DesignNumber) <br />
+            <label>Color</label>
+            @Html.EnumDropDownListFor(x => x.Color) <br />
+            <input type="submit" />
+        }
+    }
+
+</div>
+

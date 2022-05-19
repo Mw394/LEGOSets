@@ -38,6 +38,42 @@ namespace DataAccess.Repository
             }
         }
 
+        public static List<DTOLEGOBrick> GetLEGOBricks()
+        {
+            using(LEGODBContext ctx = new LEGODBContext())
+            {
+                return LEGOBrickMapper.Map(ctx.LEGOBricks.ToList<LEGOBrick>());
+            }
+
+        }
+
+        public static void AddLEGOBrick(DTOLEGOBrick LEGOBrick)
+        {
+            using(LEGODBContext ctx = new LEGODBContext())
+            {
+                ctx.LEGOBricks.Add(LEGOBrickMapper.Map(LEGOBrick));
+                ctx.SaveChanges();
+            }
+        }
+
+        public static void UpdateLEGOBrick(DTOLEGOBrick LEGOBrick)
+        {
+            using(LEGODBContext ctx = new LEGODBContext())
+            {
+                var something = ctx.LEGOBricks.Find(LEGOBrick.LEGOBrickID);
+                ctx.Entry(something).CurrentValues.SetValues(LEGOBrick);
+                ctx.SaveChanges();
+            }
+        }
+
+        public static DTOLEGOBrick GetLEGOBrick(int id)
+        {
+            using (LEGODBContext ctx =new LEGODBContext())
+            {
+                return LEGOBrickMapper.Map(ctx.LEGOBricks.Find(id));
+            }
+        }
+
 
     }
 }

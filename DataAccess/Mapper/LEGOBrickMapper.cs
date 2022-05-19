@@ -18,8 +18,18 @@ namespace DataAccess.Mapper
 
         public static LEGOBrick Map(DTO.Model.DTOLEGOBrick LEGOBrick)
         {
-            return new LEGOBrick(LEGOBrick.Desciprtion, LEGOBrick.DesignNumber, LEGOBrick.Color);
+            return new LEGOBrick(LEGOBrick.Description, LEGOBrick.DesignNumber, LEGOBrick.Color);
         }
-        
+
+        public static List<DTO.Model.DTOLEGOBrick> Map(List<LEGOBrick> LEGOBricks)
+        {
+            List<DTO.Model.DTOLEGOBrick> legoBricks = new List<DTO.Model.DTOLEGOBrick>();
+            foreach (var legoSet in LEGOBricks)
+            {
+                legoBricks.Add(Map(legoSet));
+            }
+            return legoBricks;
+        }
+
     }
 }

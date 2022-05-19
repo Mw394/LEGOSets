@@ -2,6 +2,36 @@
 @{
     ViewBag.Title = "LEGOHome";
 }
+<link href="~/Content/HomePage.css" rel="stylesheet" type="text/css" />
 
-<h2>LEGOHome</h2>
+<div class="lists">
+    <div class="LEGOSets">
+        <h1>LEGOSets</h1>
+        <ul>
+            @foreach(var set in ViewBag.LEGOSets)
+            {
+                <li>
+                    @set.LEGOSetName
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="LEGOBricks">
+        <h1>LEGOBricks</h1>
+        <button onclick="@("window.location.href='" + @Url.Action("ShowLEGOBrickNewEdit", "LEGO") + "'");">Create LEGO Brick</button>
+            <ul>
+                @foreach (var brick in ViewBag.LEGOBricks)
+                {
+                    <li class="LEGOBrickContainer">
+                        <div class="BrickInfo">
+                            @brick.Description | @brick.Color
+                        </div>
+                        <div class="BrickButton">
+                            <button onclick="@("window.location.href='" + @Url.Action("ShowLEGOBrickNewEdit", "LEGO") + "?id="+ brick.LEGOBrickID +"'");">Edit</button>
+                        </div>
+                    </li>
+                }
+            </ul>
+</div>
+</div>
 

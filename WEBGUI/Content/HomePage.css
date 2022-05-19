@@ -1,0 +1,33 @@
+﻿body
+{
+}
+
+.lists {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.LEGOSets {
+    width: 50%;
+}
+
+.LEGOBricks {
+    width: 50%;
+}
+
+.LEGOBrickContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.BrickInfo {
+    width: 20%;
+}
+
+.BrickButton {
+    width: 5%;
+}
+
+
