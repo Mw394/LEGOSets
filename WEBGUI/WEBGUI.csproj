@@ -115,6 +115,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\LEGO\LEGOHome.cshtml" />
     <Content Include="Views\LEGO\LEGOBrickNewEdit.cshtml" />
+    <Content Include="Views\LEGO\LEGOSetNewEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

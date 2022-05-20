@@ -30,6 +30,16 @@ namespace DataAccess.Repository
             }
         }
 
+        public static void UpdateLEGOSet(DTOLEGOSet LEGOSet)
+        {
+            using(LEGODBContext ctx = new LEGODBContext())
+            {
+                var LEGOSetToUpdate = ctx.LEGOSets.Find(LEGOSet.LEGOSetID);
+                ctx.Entry(LEGOSetToUpdate).CurrentValues.SetValues(LEGOSet);
+                ctx.SaveChanges();
+            }
+        }
+
         public static List<DTOLEGOSet> GetLEGOSets()
         {
             using(LEGODBContext ctx = new LEGODBContext())
@@ -60,8 +70,8 @@ namespace DataAccess.Repository
         {
             using(LEGODBContext ctx = new LEGODBContext())
             {
-                var something = ctx.LEGOBricks.Find(LEGOBrick.LEGOBrickID);
-                ctx.Entry(something).CurrentValues.SetValues(LEGOBrick);
+                var LEGOBricktoUpdate = ctx.LEGOBricks.Find(LEGOBrick.LEGOBrickID);
+                ctx.Entry(LEGOBricktoUpdate).CurrentValues.SetValues(LEGOBrick);
                 ctx.SaveChanges();
             }
         }

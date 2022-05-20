@@ -22,6 +22,11 @@ namespace BusinessLogic.BLL
             LEGORepository.AddLEGOSet(LEGOSet);
         }
 
+        public void UpdateLEGOSet(DTOLEGOSet LEGOSet)
+        {
+            LEGORepository.UpdateLEGOSet(LEGOSet);
+        }
+
         public List<DTOLEGOSet> GetLEGOSets()
         {
             return LEGORepository.GetLEGOSets();

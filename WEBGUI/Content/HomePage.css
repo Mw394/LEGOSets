@@ -26,8 +26,18 @@
     width: 20%;
 }
 
-.BrickButton {
+.ButtonContainer {
     width: 5%;
+}
+
+.LEGOSetContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.SetInfo {
+    width: 20%;
 }
 
 

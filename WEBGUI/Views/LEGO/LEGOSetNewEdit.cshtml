@@ -1,0 +1,48 @@
+﻿@using DTO.Model
+@model DTOLEGOSet
+
+@{
+    ViewBag.Title = "LEGOSetNewEdit";
+}
+
+<h2>LEGOSetNewEdit</h2>
+<div>
+    @if (ViewBag.Update)
+    {
+        using (Html.BeginForm("UpdateLEGOSet", "LEGO", FormMethod.Post))
+        {
+            <label>ID</label>
+            @Html.TextBox("legoSetID", Model.LEGOSetID) <br />
+            <label>Set Number</label>
+            @Html.TextBox("legoSetNumber", Model.LEGOSetNumber) <br />
+            <label>Set Name</label>
+            @Html.TextBox("legoSetName", Model.LEGOSetName) <br />
+            <label>In storage</label>
+            @Html.CheckBox("inStorage", Model.InStorage) <br />
+            <label>Discontinued</label>
+            @Html.CheckBox("discontinued", Model.Discontinued) <br>
+            <input type="submit" />
+            <input type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "LEGO") + "'")" />
+        }
+    }
+    else
+    {
+        using (Html.BeginForm("CreateLEGOSet", "LEGO", FormMethod.Post))
+        {
+            <label>ID</label>
+            @Html.TextBox("legoSetID", Model.LEGOSetID) <br />
+            <label>Set Number</label>
+            @Html.TextBox("legoSetNumber", Model.LEGOSetNumber) <br />
+            <label>Set Name</label>
+            @Html.TextBox("legoSetName", Model.LEGOSetName) <br />
+            <label>In storage</label>
+            @Html.CheckBox("inStorage", Model.InStorage) <br />
+            <label>Discontinued</label>
+            @Html.CheckBox("discontinued", Model.Discontinued) <br>
+            <input type="submit" />
+            <button type="reset">Reset</button>
+            <input type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "LEGO") + "'")" />
+        }
+    }
+</div>
+

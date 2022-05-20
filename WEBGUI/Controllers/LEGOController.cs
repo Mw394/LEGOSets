@@ -50,5 +50,35 @@ namespace WEBGUI.Controllers
             LEGOBLL.UpdateLEGOBrick(LEGOBrick);
             return Index();
         }
+
+        public ActionResult ShowLEGOSetNewEdit(int id = 0)
+        {
+            var DTOLEGOSet = new DTOLEGOSet();
+            ViewBag.Update = false;
+            if (id != 0)
+            {
+                LEGOBLL LEGOBLL = new LEGOBLL();
+                DTOLEGOSet = LEGOBLL.GetLEGOSet(id);
+                ViewBag.Update = true;
+            }
+            return View("LEGOSetNewEdit", DTOLEGOSet);
+        }
+
+        [HttpPost]
+        public ActionResult CreateLEGOSet(DTOLEGOSet LEGOSet)
+        {
+            LEGOBLL LEGOBLL = new LEGOBLL();
+            LEGOBLL.AddLEGOSet(LEGOSet);
+            return Index();
+        }
+
+        public ActionResult UpdateLEGOSet(DTOLEGOSet LEGOSet)
+        {
+            LEGOBLL LEGOBLL = new LEGOBLL();
+            LEGOBLL.UpdateLEGOSet(LEGOSet);
+            return Index();
+        }
+
+
     }
 }
