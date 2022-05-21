@@ -59,6 +59,9 @@ namespace WEBGUI.Controllers
             {
                 LEGOBLL LEGOBLL = new LEGOBLL();
                 DTOLEGOSet = LEGOBLL.GetLEGOSet(id);
+                List<DTOLEGOBrick> bricks = LEGOBLL.GetLEGOBricks();
+                List<DTOSetBrickLink> links = LEGOBLL.GetSetBrickLinks(DTOLEGOSet);
+                DTOLEGOSet.SetBrickLinks = links;
                 ViewBag.Update = true;
             }
             return View("LEGOSetNewEdit", DTOLEGOSet);

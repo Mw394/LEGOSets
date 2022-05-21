@@ -13,6 +13,8 @@ namespace DataAccess.DBContext
 
         public LEGODBContext() : base("LEGOConnection")
         {
+            Configuration.LazyLoadingEnabled = true;
+            Configuration.ProxyCreationEnabled = true;
         }
 
         public DbSet<LEGOSet> LEGOSets { get; set; }

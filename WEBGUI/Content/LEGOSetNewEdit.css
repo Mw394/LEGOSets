@@ -1,0 +1,16 @@
+﻿body {
+}
+
+.pageInfo {
+    text-align: center;
+}
+
+.LEGOSet {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.baseData {
+    width: 100%;
+}

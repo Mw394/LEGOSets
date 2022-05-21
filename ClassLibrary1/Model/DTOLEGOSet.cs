@@ -32,6 +32,8 @@ namespace DTO.Model
         public bool Discontinued { get; set; }
 
         public bool InStorage { get; set; }
+
+        public List<DTOSetBrickLink> SetBrickLinks { get; set; }
     }
 
 

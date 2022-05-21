@@ -14,7 +14,7 @@ namespace DataAccess.Model
         private int legoBrickID;
         private Color color;
 
-        public LEGOBrick()
+        protected LEGOBrick()
         {
                 
         }

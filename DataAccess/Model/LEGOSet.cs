@@ -12,8 +12,9 @@ namespace DataAccess.Model
         private int legoSetID;
         private bool discontinued;
         private bool inStorage;
+        private List<SetBrickLink> setBrickLinks = new List<SetBrickLink>();
 
-        public LEGOSet()
+        protected LEGOSet()
         {
 
         }
@@ -33,5 +34,6 @@ namespace DataAccess.Model
         public int LEGOSetID { get => legoSetID; set => legoSetID = value; }
         public bool Discontinued { get => discontinued; set => discontinued = value; }
         public bool InStorage { get => inStorage; set => inStorage = value; }
+        public virtual List<SetBrickLink> SetBrickLinks { get => setBrickLinks; set => setBrickLinks = value; }
     }
 }

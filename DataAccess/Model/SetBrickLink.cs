@@ -12,7 +12,7 @@ namespace DataAccess.Model
         private int amount;
         private int setBrickLinkID;
 
-        public SetBrickLink()
+        protected SetBrickLink()
         {
 
         }
@@ -24,8 +24,8 @@ namespace DataAccess.Model
             this.amount = amount;
         }
 
-        public LEGOBrick LEGOBrick { get => legoBrick; set => legoBrick = value; }
-        public LEGOSet LEGOSet { get => legoSet; set => legoSet = value; }
+        public virtual LEGOBrick LEGOBrick { get => legoBrick; set => legoBrick = value; }
+        public virtual LEGOSet LEGOSet { get => legoSet; set => legoSet = value; }
         public int Amount { get => amount; set => amount = value; }
         public int SetBrickLinkID { get => setBrickLinkID; set => setBrickLinkID = value; }
     }

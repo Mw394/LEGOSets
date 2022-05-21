@@ -84,6 +84,14 @@ namespace DataAccess.Repository
             }
         }
 
+        public static List<DTOSetBrickLink> GetSetBrickLinks(DTOLEGOSet DTOLEGOSet) 
+        {
+            using (LEGODBContext ctx = new LEGODBContext())
+            {
+                return SetBrickLinkMapper.Map(ctx.SetBrickLinks.Where(x => x.LEGOSet.LEGOSetID == DTOLEGOSet.LEGOSetID).ToList());
+            }
+        }
+
 
     }
 }

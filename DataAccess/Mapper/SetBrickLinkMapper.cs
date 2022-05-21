@@ -19,5 +19,25 @@ namespace DataAccess.Mapper
         {
             return new SetBrickLink(LEGOSetMapper.Map(SetBrickLink.DTOLEGOSet), LEGOBrickMapper.Map(SetBrickLink.LEGOBrick), SetBrickLink.Amount);
         }
+
+        public static List<SetBrickLink> Map(List<DTO.Model.DTOSetBrickLink> SetBrickLinks)
+        {
+            List<SetBrickLink> setBrickLinks = new List<SetBrickLink>();
+            foreach (var link in SetBrickLinks)
+            {
+                setBrickLinks.Add(Map(link));
+            }
+            return setBrickLinks;
+        }
+
+        public static List<DTO.Model.DTOSetBrickLink> Map(List<SetBrickLink> SetBrickLinks)
+        {
+            List<DTO.Model.DTOSetBrickLink> setBrickLinks = new List<DTO.Model.DTOSetBrickLink>();
+            foreach (var link in SetBrickLinks)
+            {
+                setBrickLinks.Add(Map(link));
+            }
+            return setBrickLinks;
+        }
     }
 }
