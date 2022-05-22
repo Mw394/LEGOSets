@@ -29,5 +29,7 @@ namespace DTO.Model
         public int Amount { get; set; }
 
         public int SetBrickLinkID { get; set; }
+
+        public string BrickInfo { get { return Amount + " | " + LEGOBrick.Description + " | " + LEGOBrick.Color; } }
     }
 }

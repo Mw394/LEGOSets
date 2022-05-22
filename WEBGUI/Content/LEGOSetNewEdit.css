@@ -12,5 +12,10 @@
 }
 
 .baseData {
-    width: 100%;
+    width: 20%;
+}
+
+.brickLinksList {
+    width: 200px;
+    height: 200px;
 }

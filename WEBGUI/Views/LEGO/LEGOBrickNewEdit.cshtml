@@ -9,39 +9,25 @@
 
 <h1>LEGO Brick NewEdit</h1>
 <div>
-    @if (ViewBag.Update)
+    @using (Html.BeginForm("UpdateLEGOBrick", "LEGO", FormMethod.Post))
     {
-        using (Html.BeginForm("UpdateLEGOBrick", "LEGO", FormMethod.Post))
-        {
-            <label>ID</label>
-            @Html.TextBox("legoBrickID", Model.LEGOBrickID) <br />
-            <label>Description</label>
-            @Html.TextBox("description", Model.Description) <br />
-            <label>Design Number</label>
-            @Html.TextBox("designNumber", Model.DesignNumber) <br />
-            <label>Color</label>
-            @Html.EnumDropDownListFor(x => x.Color) <br />
-            <input type="submit"/>
-            <input type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "LEGO") + "'")"/>
-            
-        }
-    }
-    else
-    {
-        using (Html.BeginForm("CreateLEGOBrick", "LEGO", FormMethod.Post))
-        {
-            <label>ID</label>
-            @Html.TextBox("legoBrickID", Model.LEGOBrickID) <br />
-            <label>Description</label>
-            @Html.TextBox("description", Model.Description) <br />
-            <label>Design Number</label>
-            @Html.TextBox("designNumber", Model.DesignNumber) <br />
-            <label>Color</label>
-            @Html.EnumDropDownListFor(x => x.Color) <br />
+        @Html.HiddenFor(brick => brick.LEGOBrickID)<br />
+        <label>Description</label>
+        @Html.TextBoxFor(brick => brick.Description)
+        @Html.ValidationMessageFor(brick => brick.Description) <br />
+        <label>Design Number</label>
+        @Html.TextBoxFor(brick => brick.DesignNumber) <br />
+        <label>Color</label>
+        @Html.EnumDropDownListFor(brick => brick.Color) <br />
+        <div class="actions">
             <input type="submit" />
-            <button type="reset">Reset</button>
+            @if (!ViewBag.Update)
+            {
+                <button type="reset">Reset</button>
+            }
             <input type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("Index", "LEGO") + "'")" />
-        }
+
+        </div>
     }
 
 </div>

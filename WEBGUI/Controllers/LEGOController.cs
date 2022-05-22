@@ -55,13 +55,17 @@ namespace WEBGUI.Controllers
         {
             var DTOLEGOSet = new DTOLEGOSet();
             ViewBag.Update = false;
+            List<SelectListItem> selectableItems = new List<SelectListItem>();
             if (id != 0)
             {
                 LEGOBLL LEGOBLL = new LEGOBLL();
                 DTOLEGOSet = LEGOBLL.GetLEGOSet(id);
-                List<DTOLEGOBrick> bricks = LEGOBLL.GetLEGOBricks();
                 List<DTOSetBrickLink> links = LEGOBLL.GetSetBrickLinks(DTOLEGOSet);
                 DTOLEGOSet.SetBrickLinks = links;
+                foreach (var link in links)
+                {
+                    selectableItems.Add(new SelectListItem { Text = link.BrickInfo, Value = link.SetBrickLinkID.ToString() });
+                }
                 ViewBag.Update = true;
             }
             return View("LEGOSetNewEdit", DTOLEGOSet);
@@ -70,6 +74,10 @@ namespace WEBGUI.Controllers
         [HttpPost]
         public ActionResult CreateLEGOSet(DTOLEGOSet LEGOSet)
         {
+            if (!ModelState.IsValid)
+            {
+                return ShowLEGOBrickNewEdit();
+            }
             LEGOBLL LEGOBLL = new LEGOBLL();
             LEGOBLL.AddLEGOSet(LEGOSet);
             return Index();
@@ -81,7 +89,6 @@ namespace WEBGUI.Controllers
             LEGOBLL.UpdateLEGOSet(LEGOSet);
             return Index();
         }
-
 
     }
 }
