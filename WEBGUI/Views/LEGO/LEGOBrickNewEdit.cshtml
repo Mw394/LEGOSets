@@ -11,14 +11,17 @@
 <div>
     @using (Html.BeginForm("UpdateLEGOBrick", "LEGO", FormMethod.Post))
     {
-        @Html.HiddenFor(brick => brick.LEGOBrickID)<br />
+        <label>ID</label>
+        @Html.TextBoxFor(brick => brick.LEGOBrickID, new { @readonly = "readonly", @Name = "", @Disabled = true })<br />
         <label>Description</label>
         @Html.TextBoxFor(brick => brick.Description)
         @Html.ValidationMessageFor(brick => brick.Description) <br />
         <label>Design Number</label>
-        @Html.TextBoxFor(brick => brick.DesignNumber) <br />
+        @Html.TextBoxFor(brick => brick.DesignNumber)
+        @Html.ValidationMessageFor(brick => brick.DesignNumber) <br />
         <label>Color</label>
-        @Html.EnumDropDownListFor(brick => brick.Color) <br />
+        @Html.EnumDropDownListFor(brick => brick.Color)
+        @Html.ValidationMessageFor(brick => brick.Color) <br />
         <div class="actions">
             <input type="submit" />
             @if (!ViewBag.Update)

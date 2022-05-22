@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace DTO.Model
 {
@@ -21,10 +22,12 @@ namespace DTO.Model
             LEGOSetID = lEGOSetID;
             Discontinued = discontinued;
             InStorage = inStorage;
+            SetBrickLinks = new List<DTOSetBrickLink>();
         }
-
+        [Required(ErrorMessage = "Please enter a Set name")]
         public string LEGOSetName { get; set; }
 
+        [Required(ErrorMessage = "Please enter a SetNumber")]
         public string LEGOSetNumber { get; set; }
 
         public int LEGOSetID { get; set; }

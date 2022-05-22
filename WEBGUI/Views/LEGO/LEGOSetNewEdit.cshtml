@@ -16,11 +16,13 @@
     <div class="LEGOSet">
         <div class="baseData">
             <label>ID</label>
-            @Html.TextBoxFor(set => set.LEGOSetID) <br />
+            @Html.TextBoxFor(set => set.LEGOSetID, new { @readonly = "readonly", @Name = "", @Disabled = true}) <br />
             <label>Set Number</label>
-            @Html.TextBoxFor(set => set.LEGOSetNumber) <br />
+            @Html.TextBoxFor(set => set.LEGOSetNumber) 
+            @Html.ValidationMessageFor(set => set.LEGOSetNumber) <br />
             <label>Set Name</label>
-            @Html.TextBoxFor(set => set.LEGOSetName) <br />
+            @Html.TextBoxFor(set => set.LEGOSetName) 
+            @Html.ValidationMessageFor(set => set.LEGOSetName)<br />
             <label>In storage</label>
             @Html.CheckBoxFor(set => set.InStorage) <br />
             <label>Discontinued</label>
@@ -29,6 +31,9 @@
         <div class="setLinkData">
             <label>Contains following bricks</label> <br />
             @Html.ListBoxFor(x => x.SetBrickLinks,new SelectList(Model.SetBrickLinks, "", "BrickInfo"), new {@class = "brickLinksList" })
+        </div>
+        <div class="BrickContainer">
+            @Html.DropDownList("Bricks", new SelectList(ViewBag.Bricks))
         </div>
     </div>
 

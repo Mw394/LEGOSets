@@ -38,6 +38,10 @@ namespace WEBGUI.Controllers
         [HttpPost]
         public ActionResult CreateLEGOBrick(DTOLEGOBrick LEGOBrick)
         {
+            if (!ModelState.IsValid)
+            {
+                return ShowLEGOBrickNewEdit();
+            }
             LEGOBLL LEGOBLL = new LEGOBLL();
             LEGOBLL.AddLEGOBrick(LEGOBrick);
             return Index();
@@ -46,6 +50,10 @@ namespace WEBGUI.Controllers
         [HttpPost]
         public ActionResult UpdateLEGOBrick(DTOLEGOBrick LEGOBrick)
         {
+            if (!ModelState.IsValid)
+            {
+                return ShowLEGOBrickNewEdit(LEGOBrick.LEGOBrickID);
+            }
             LEGOBLL LEGOBLL = new LEGOBLL();
             LEGOBLL.UpdateLEGOBrick(LEGOBrick);
             return Index();
@@ -53,12 +61,15 @@ namespace WEBGUI.Controllers
 
         public ActionResult ShowLEGOSetNewEdit(int id = 0)
         {
+            LEGOBLL LEGOBLL = new LEGOBLL();
             var DTOLEGOSet = new DTOLEGOSet();
+            DTOLEGOSet.SetBrickLinks = new List<DTOSetBrickLink>();
+            var bricks = LEGOBLL.GetLEGOBricks();
+            ViewBag.Bricks = bricks;
             ViewBag.Update = false;
             List<SelectListItem> selectableItems = new List<SelectListItem>();
-            if (id != 0)
-            {
-                LEGOBLL LEGOBLL = new LEGOBLL();
+            if (id != 0) { 
+            
                 DTOLEGOSet = LEGOBLL.GetLEGOSet(id);
                 List<DTOSetBrickLink> links = LEGOBLL.GetSetBrickLinks(DTOLEGOSet);
                 DTOLEGOSet.SetBrickLinks = links;
@@ -76,7 +87,7 @@ namespace WEBGUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ShowLEGOBrickNewEdit();
+                return ShowLEGOSetNewEdit();
             }
             LEGOBLL LEGOBLL = new LEGOBLL();
             LEGOBLL.AddLEGOSet(LEGOSet);
@@ -85,6 +96,10 @@ namespace WEBGUI.Controllers
 
         public ActionResult UpdateLEGOSet(DTOLEGOSet LEGOSet)
         {
+            if (!ModelState.IsValid)
+            {
+                return ShowLEGOSetNewEdit(LEGOSet.LEGOSetID);
+            }
             LEGOBLL LEGOBLL = new LEGOBLL();
             LEGOBLL.UpdateLEGOSet(LEGOSet);
             return Index();

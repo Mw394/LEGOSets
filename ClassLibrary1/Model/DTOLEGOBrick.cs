@@ -34,14 +34,20 @@ namespace DTO.Model
             LEGOBrickID = legoBrickID;
             Color = color;
         }
-        [Required]
+        [Required(ErrorMessage = "Please enter a description")]
         public string Description { get; set; }
-
+        [Required(ErrorMessage = "Please enter a Design Number")]
         public int DesignNumber { get; set; }
 
         public int LEGOBrickID { get; set; }
-
+        [Required(ErrorMessage = "Please choose a color")]
         public Color Color { get; set; }
+
+        public override string ToString()
+        {
+            return DesignNumber + " | " + Description + " | " + Color;
+        }
+
     }
 
 }
