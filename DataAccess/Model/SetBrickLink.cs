@@ -5,28 +5,24 @@ using System.Web;
 
 namespace DataAccess.Model
 {
-    internal class SetBrickLink
+    public class SetBrickLink
     {
-        private LEGOBrick legoBrick;
-        private LEGOSet legoSet;
-        private int amount;
-        private int setBrickLinkID;
 
-        protected SetBrickLink()
+        public SetBrickLink()
         {
 
         }
 
         public SetBrickLink(LEGOSet legoSet, LEGOBrick legoBrick, int amount)
         {
-            this.legoBrick = legoBrick;
-            this.legoSet = legoSet;
-            this.amount = amount;
+            LEGOBrick = legoBrick;
+            LEGOSet = legoSet;
+            Amount = amount;
         }
 
-        public virtual LEGOBrick LEGOBrick { get => legoBrick; set => legoBrick = value; }
-        public virtual LEGOSet LEGOSet { get => legoSet; set => legoSet = value; }
-        public int Amount { get => amount; set => amount = value; }
-        public int SetBrickLinkID { get => setBrickLinkID; set => setBrickLinkID = value; }
+        public virtual LEGOBrick LEGOBrick { get; set; }
+        public virtual LEGOSet LEGOSet { get; set; }
+        public int Amount { get; set; }
+        public int SetBrickLinkID { get; set; }
     }
 }
