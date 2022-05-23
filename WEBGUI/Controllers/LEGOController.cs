@@ -106,9 +106,49 @@ namespace WEBGUI.Controllers
         }
 
 
-        public ActionResult ModalPopUp()
+        public ActionResult ModalPopUp(int id = 0)
         {
-            return View();
+            LEGOBLL LEGOBLL = new LEGOBLL();
+            var DTOLEGOSet = new DTOLEGOSet();
+            DTOLEGOSet.SetBrickLinks = new List<DTOSetBrickLink>();
+            var bricks = LEGOBLL.GetLEGOBricks();
+            ViewBag.Bricks = bricks;
+            ViewBag.Update = false;
+            List<SelectListItem> selectableItems = new List<SelectListItem>();
+            if (id != 0)
+            {
+
+                DTOLEGOSet = LEGOBLL.GetLEGOSet(id);
+                List<DTOSetBrickLink> links = LEGOBLL.GetSetBrickLinks(DTOLEGOSet);
+                DTOLEGOSet.SetBrickLinks = links;
+                foreach (var link in links)
+                {
+                    selectableItems.Add(new SelectListItem { Text = link.BrickInfo, Value = link.SetBrickLinkID.ToString() });
+                }
+                ViewBag.Update = true;
+            }
+            return View("ModalPopUp", DTOLEGOSet);
         }
+
+        public ActionResult ShowSetBrickLinkNewEdit(int id = 0, DTOLEGOSet DTOLEGOSet = null)
+        {
+            var DTOSetBrickLink = new DTOSetBrickLink();
+            DTOSetBrickLink.DTOLEGOSet = DTOLEGOSet;
+            return PartialView("ModalPopUp", DTOSetBrickLink);
+        }
+
+        public ActionResult BrickTest()
+        {
+            LEGOBLL legoBLL = new LEGOBLL();
+            List<DTOLEGOBrick> legoBricks = legoBLL.GetLEGOBricks();
+            ViewBag.LEGOBricks = legoBricks;
+            return View("BrickTest", legoBricks);
+        }
+
+        public ActionResult BrickCreate()
+        {
+            return PartialView("View1");
+        }
+
     }
 }

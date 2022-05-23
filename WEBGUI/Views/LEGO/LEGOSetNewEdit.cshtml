@@ -29,6 +29,7 @@
             @Html.CheckBoxFor(set => set.Discontinued) <br>
         </div>
         <div class="setLinkData">
+            <button onclick="@("window.location.href='" + @Url.Action("ModalPopUp", "LEGO")  +"'");">Test</button>
             <label>Contains following bricks</label> <br />
             @Html.ListBoxFor(x => x.SetBrickLinks,new SelectList(Model.SetBrickLinks, "", "BrickInfo"), new {@class = "brickLinksList" })
         </div>

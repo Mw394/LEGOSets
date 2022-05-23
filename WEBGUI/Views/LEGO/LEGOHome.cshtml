@@ -17,6 +17,7 @@
                     </div>
                     <div class="ButtonContainer">
                         <button onclick="@("window.location.href='" + @Url.Action("ShowLEGOSetNewEdit", "LEGO") + "?id="+ set.LEGOSetID +"'");">Edit</button>
+                        <button onclick="@("window.location.href='" + @Url.Action("ModalPopUp", "LEGO") + "?id="+ set.LEGOSetID +"'");">Edit</button>
                     </div>
                 </li>
             }
