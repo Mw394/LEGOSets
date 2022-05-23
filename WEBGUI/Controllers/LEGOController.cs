@@ -105,5 +105,10 @@ namespace WEBGUI.Controllers
             return Index();
         }
 
+
+        public ActionResult ModalPopUp()
+        {
+            return View();
+        }
     }
 }
