@@ -8,7 +8,7 @@ using System.Web;
 
 namespace DataAccess.DBContext
 {
-    internal class LEGODBContext : DbContext
+    public class LEGODBContext : DbContext
     {
 
         public LEGODBContext() : base("LEGOConnection")

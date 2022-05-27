@@ -182,6 +182,7 @@
     <Content Include="Views\LEGO\LEGOSet\LEGOSetDetails.cshtml" />
     <Content Include="Views\LEGO\LEGOSetBrickLink\SetBrickLinkCreate.cshtml" />
     <Content Include="Views\LEGO\LEGOSetBrickLink\ShowSetBrickLinkList.cshtml" />
+    <Content Include="Views\LEGO\LEGOSetBrickLink\SetBrickLinkEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

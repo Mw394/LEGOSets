@@ -86,6 +86,8 @@ namespace WEBGUI.Controllers
         public ActionResult ShowLEGOSetCreate()
         {
             DTOLEGOSet newSet = new DTOLEGOSet();
+            this.HttpContext.Session["LEGOSet"] = newSet;
+            this.HttpContext.Session["NEW"] = true;
             return View("LEGOSet/LEGOSetCreate", newSet);
         }
 
@@ -108,6 +110,8 @@ namespace WEBGUI.Controllers
             {
                 return ShowLEGOSetEdit(LEGOSet.LEGOSetID);
             }
+            var links = (List<DTOSetBrickLink>)this.HttpContext.Session["links"];
+            LEGOSet.SetBrickLinks = links ?? new List<DTOSetBrickLink>();
             LEGOBLL LEGOBLL = new LEGOBLL();
             LEGOBLL.UpdateLEGOSet(LEGOSet);
             return ShowLEGOSetsList();
@@ -127,6 +131,7 @@ namespace WEBGUI.Controllers
             var links = bll.GetSetBrickLinks(set);
             set.SetBrickLinks = links;
             this.HttpContext.Session["LEGOSet"] = set;
+            this.HttpContext.Session["NEW"] = false;
             return View("LEGOset/LEGOSetEdit", set);
         }
 
@@ -141,24 +146,76 @@ namespace WEBGUI.Controllers
         {
             DTOSetBrickLink newLink = new DTOSetBrickLink();
             var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
+            var NEW = (bool)this.HttpContext.Session["NEW"];
             newLink.LEGOSetID = set.LEGOSetID;
             newLink.DTOLEGOSet = set;
             LEGOBLL bll = new LEGOBLL();
             ViewBag.LEGOBricks = bll.GetLEGOBricks();
             ViewBag.LEGOSet = set.LEGOSetID;
+            ViewBag.New = NEW;
             return View("LEGOSetBrickLink/SetBrickLinkCreate", newLink);
         }
 
         [HttpPost]
         public ActionResult SetBrickLinkCreate(DTOSetBrickLink setBrickLink)
         {
+            var NEW = (bool)this.HttpContext.Session["NEW"];
             var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
             LEGOBLL bll = new LEGOBLL();
             setBrickLink.LEGOBrick = bll.GetLEGOBrick(setBrickLink.LEGOBrickID);
+            setBrickLink.DTOLEGOSet = set;
+            this.HttpContext.Session["links"] = set.SetBrickLinks;
             set.SetBrickLinks.Add(setBrickLink);
+            if (NEW)
+            {
+                return View("LEGOSet/LEGOSetCreate", set);
+            }
             return View("LEGOSet/LEGOSetEdit", set);
         }
-               
+
+        public ActionResult ShowSetBrickLinkEdit(int id)
+        {
+            LEGOBLL bll = new LEGOBLL();
+            var link = bll.GetSetBrickLink(id);
+            var NEW = (bool)this.HttpContext.Session["NEW"];
+            var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
+            ViewBag.LEGOBricks = bll.GetLEGOBricks();
+            ViewBag.New = NEW;
+            ViewBag.LEGOSet = set.LEGOSetID;
+            return View("LEGOSetBrickLink/SetBrickLinkEdit", link);
+        }
+
+        public ActionResult UpdateSetBrickLink(DTOSetBrickLink SetBrickLink)
+        {
+            LEGOBLL bll = new LEGOBLL();
+            var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
+            SetBrickLink.DTOLEGOSet = set;
+            SetBrickLink.LEGOBrick = bll.GetLEGOBrick(SetBrickLink.LEGOBrickID);
+            var linkToRemove = set.SetBrickLinks.Where(item => item.SetBrickLinkID == SetBrickLink.SetBrickLinkID).First();
+            set.SetBrickLinks.Remove(linkToRemove);
+            set.SetBrickLinks.Add(SetBrickLink);
+            this.HttpContext.Session["links"] = set.SetBrickLinks;
+            var NEW = (bool)this.HttpContext.Session["NEW"];
+            ViewBag.New = NEW;
+            if (NEW)
+            {
+                return View("LEGOSet/LEGOSetCreate", set);
+            }
+            return View("LEGOSet/LEGOSetEdit", set);
+        }
+
+        public ActionResult DeleteSetBrickLink(int id)
+        {
+            var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
+            var linkToRemove = set.SetBrickLinks.Where(item => item.SetBrickLinkID == id).First();
+            set.SetBrickLinks.Remove(linkToRemove);
+            var NEW = (bool)this.HttpContext.Session["NEW"];
+            if (NEW)
+            {
+                return View("LEGOSet/LEGOSetCreate", set);
+            }
+            return View("LEGOSet/LEGOSetEdit", set);
+        }
 
 
         public ActionResult ModalPopUp(int id = 0)

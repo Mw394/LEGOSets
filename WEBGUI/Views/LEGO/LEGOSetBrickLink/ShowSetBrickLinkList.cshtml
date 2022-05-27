@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DTO.Model.DTOSetBrickLink>
 
 <p>
-    @Html.ActionLink("Create New", "ShowSetBrickLinkCreate", "LEGO", new { id = ViewBag.ID })
+    @Html.ActionLink("Add LEGO Brick", "ShowSetBrickLinkCreate", "LEGO")
 </p>
 
 <table class="table">
@@ -30,9 +30,9 @@
             @Html.DisplayFor(modelItem => item.LEGOBrick.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "ShowSetBrickLinkEdit", new { id=item.SetBrickLinkID }) |
+            @Html.ActionLink("Details", "ShowSetBrickLinkDetails", new { id=item.SetBrickLinkID }) |
+            @Html.ActionLink("Delete", "DeleteSetBrickLink", new { id=item.SetBrickLinkID })
         </td>
     </tr>
 }

@@ -66,5 +66,10 @@ namespace BusinessLogic.BLL
         {
             return LEGORepository.GetSetBrickLinks(LEGOSet);
         }
+
+        public DTOSetBrickLink GetSetBrickLink(int id)
+        {
+            return LEGORepository.GetSetBrickLink(id);
+        }
     }
 }

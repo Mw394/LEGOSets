@@ -35,6 +35,7 @@ namespace DataAccess.Repository
             using(LEGODBContext ctx = new LEGODBContext())
             {
                 var LEGOSetToUpdate = ctx.LEGOSets.Find(LEGOSet.LEGOSetID);
+                UpdateSetBrickLinks(LEGOSet.SetBrickLinks, ctx, LEGOSetToUpdate);
                 ctx.Entry(LEGOSetToUpdate).CurrentValues.SetValues(LEGOSet);
                 ctx.SaveChanges();
             }
@@ -123,6 +124,29 @@ namespace DataAccess.Repository
             }
         }
 
+        public static DTOSetBrickLink GetSetBrickLink(int id)
+        {
+            using (LEGODBContext ctx = new LEGODBContext())
+            {
+                return SetBrickLinkMapper.Map(ctx.SetBrickLinks.Find(id));
+            }
+        }
+
+        public static void UpdateSetBrickLinks(List<DTOSetBrickLink> links, LEGODBContext ctx, LEGOSet originalSet)
+        {
+                foreach (DTOSetBrickLink link in links)
+                {
+                    var linkToUpdate = ctx.SetBrickLinks.Find(link.SetBrickLinkID);
+                    if (linkToUpdate != null)
+                    {
+                        ctx.Entry(linkToUpdate).CurrentValues.SetValues(link);
+                    } else
+                    {
+                        link.DTOLEGOSet = LEGOSetMapper.Map(originalSet);
+                        ctx.SetBrickLinks.Add(SetBrickLinkMapper.Map(link));
+                    }
+                }
+        }
 
     }
 }
