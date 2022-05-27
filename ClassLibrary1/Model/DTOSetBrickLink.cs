@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO.Model
 {
+    [Serializable]
     public class DTOSetBrickLink
     {
 
@@ -20,7 +21,13 @@ namespace DTO.Model
             DTOLEGOSet = dTOLEGOSet;
             Amount = amount;
             SetBrickLinkID = setBrickLinkID;
+            LEGOBrickID = lEGOBrick.LEGOBrickID;
+            LEGOSetID = dTOLEGOSet.LEGOSetID;
         }
+
+        public int LEGOBrickID { get; set; }
+
+        public int LEGOSetID { get; set; }
 
         public DTOLEGOBrick LEGOBrick { get; set; }
 

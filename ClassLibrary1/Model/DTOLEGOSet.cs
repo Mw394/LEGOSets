@@ -7,12 +7,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DTO.Model
 {
+    [Serializable]
     public class DTOLEGOSet
     {
 
         public DTOLEGOSet()
         {
-               
+            SetBrickLinks = new List<DTOSetBrickLink>();
         }
 
         public DTOLEGOSet(string lEGOSetName, string lEGOSetNumber, int lEGOSetID, bool discontinued, bool inStorage)

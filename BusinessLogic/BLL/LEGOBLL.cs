@@ -27,6 +27,11 @@ namespace BusinessLogic.BLL
             LEGORepository.UpdateLEGOSet(LEGOSet);
         }
 
+        public void DeleteLEGOSet(int id)
+        {
+            LEGORepository.DeleteLEGOSet(id);
+        }
+
         public List<DTOLEGOSet> GetLEGOSets()
         {
             return LEGORepository.GetLEGOSets();

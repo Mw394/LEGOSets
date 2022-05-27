@@ -42,6 +42,8 @@ namespace DTO.Model
         [Required(ErrorMessage = "Please choose a color")]
         public Color Color { get; set; }
 
+        public string BrickInfo { get { return DesignNumber + " " + Description + " " + Color; } }
+
         public override string ToString()
         {
             return DesignNumber + " | " + Description + " | " + Color;

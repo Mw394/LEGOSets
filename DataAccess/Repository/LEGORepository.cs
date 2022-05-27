@@ -40,6 +40,17 @@ namespace DataAccess.Repository
             }
         }
 
+        public static void DeleteLEGOSet(int id)
+        {
+            using (LEGODBContext ctx = new LEGODBContext())
+            {
+                var LEGOSetToDelete = ctx.LEGOSets.Find(id);
+                DeleteSetBrickLinks(LEGOSetMapper.Map(LEGOSetToDelete));
+                ctx.LEGOSets.Remove(LEGOSetToDelete);
+                ctx.SaveChanges();
+            }
+        }
+
         public static List<DTOLEGOSet> GetLEGOSets()
         {
             using(LEGODBContext ctx = new LEGODBContext())
@@ -99,6 +110,16 @@ namespace DataAccess.Repository
             using (LEGODBContext ctx = new LEGODBContext())
             {
                 return SetBrickLinkMapper.Map(ctx.SetBrickLinks.Where(x => x.LEGOSet.LEGOSetID == DTOLEGOSet.LEGOSetID).ToList());
+            }
+        }
+
+        public static void DeleteSetBrickLinks(DTOLEGOSet DTOLEGOSet)
+        {
+            using (LEGODBContext ctx = new LEGODBContext())
+            {
+                var links = ctx.SetBrickLinks.Where(link => link.LEGOSet.LEGOSetID == DTOLEGOSet.LEGOSetID);
+                ctx.SetBrickLinks.RemoveRange(links);
+                ctx.SaveChanges();
             }
         }
 

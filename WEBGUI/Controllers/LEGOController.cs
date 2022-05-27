@@ -101,11 +101,64 @@ namespace WEBGUI.Controllers
             return ShowLEGOSetsList();
         }
 
+        [HttpPost]
+        public ActionResult UpdateLEGOSet(DTOLEGOSet LEGOSet)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ShowLEGOSetEdit(LEGOSet.LEGOSetID);
+            }
+            LEGOBLL LEGOBLL = new LEGOBLL();
+            LEGOBLL.UpdateLEGOSet(LEGOSet);
+            return ShowLEGOSetsList();
+        }
 
+        public ActionResult DeleteLEGOSet(int id)
+        {
+            LEGOBLL LEGOBLL = new LEGOBLL();
+            LEGOBLL.DeleteLEGOSet(id);
+            return ShowLEGOSetsList();
+        }
 
+        public ActionResult ShowLEGOSetEdit(int id)
+        {
+            LEGOBLL bll = new LEGOBLL();
+            var set = bll.GetLEGOSet(id);
+            var links = bll.GetSetBrickLinks(set);
+            set.SetBrickLinks = links;
+            this.HttpContext.Session["LEGOSet"] = set;
+            return View("LEGOset/LEGOSetEdit", set);
+        }
 
+        public ActionResult ShowLEGOSetDetails(int id)
+        {
+            LEGOBLL bll = new LEGOBLL();
+            var set = bll.GetLEGOSet(id);
+            return View("LEGOSet/LEGOSetDetails", set);
+        }
 
-       
+        public ActionResult ShowSetBrickLinkCreate()
+        {
+            DTOSetBrickLink newLink = new DTOSetBrickLink();
+            var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
+            newLink.LEGOSetID = set.LEGOSetID;
+            newLink.DTOLEGOSet = set;
+            LEGOBLL bll = new LEGOBLL();
+            ViewBag.LEGOBricks = bll.GetLEGOBricks();
+            ViewBag.LEGOSet = set.LEGOSetID;
+            return View("LEGOSetBrickLink/SetBrickLinkCreate", newLink);
+        }
+
+        [HttpPost]
+        public ActionResult SetBrickLinkCreate(DTOSetBrickLink setBrickLink)
+        {
+            var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
+            LEGOBLL bll = new LEGOBLL();
+            setBrickLink.LEGOBrick = bll.GetLEGOBrick(setBrickLink.LEGOBrickID);
+            set.SetBrickLinks.Add(setBrickLink);
+            return View("LEGOSet/LEGOSetEdit", set);
+        }
+               
 
 
         public ActionResult ModalPopUp(int id = 0)
