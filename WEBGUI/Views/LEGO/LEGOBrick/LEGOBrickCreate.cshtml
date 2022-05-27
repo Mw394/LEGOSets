@@ -1,9 +1,16 @@
-﻿@model DTO.Model.DTOLEGOBrick
+﻿@using DTO.Model
+@model DTO.Model.DTOLEGOBrick
 
-@using (Html.BeginForm()) 
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+@using (Html.BeginForm("CreateLEGOBrick", "LEGO", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>DTOLEGOBrick</h4>
         <hr />
@@ -27,8 +34,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LEGOBrickID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LEGOBrickID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.LEGOBrickID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Name = "", @Disabled = true } })
                 @Html.ValidationMessageFor(model => model.LEGOBrickID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.LEGOBrickID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Color, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -41,5 +55,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "ShowLEGOBricksList")
 </div>

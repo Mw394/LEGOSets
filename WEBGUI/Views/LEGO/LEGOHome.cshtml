@@ -4,41 +4,12 @@
 }
 <link href="~/Content/HomePage.css" rel="stylesheet" type="text/css" />
 
-<div class="lists">
-    <div class="LEGOSets">
-        <h1>LEGOSets</h1>
-        <button onclick="@("window.location.href='" + @Url.Action("ShowLEGOSetNewEdit", "LEGO") + "'");">New LEGO Set</button>
-        <ul>
-            @foreach(var set in ViewBag.LEGOSets)
-            {
-                <li class="LEGOSetContainer">
-                    <div class="SetInfo">
-                        @set.LEGOSetName
-                    </div>
-                    <div class="ButtonContainer">
-                        <button onclick="@("window.location.href='" + @Url.Action("ShowLEGOSetNewEdit", "LEGO") + "?id="+ set.LEGOSetID +"'");">Edit</button>
-                        <button onclick="@("window.location.href='" + @Url.Action("ModalPopUp", "LEGO") + "?id="+ set.LEGOSetID +"'");">Edit</button>
-                    </div>
-                </li>
-            }
-        </ul>
+<div class="Navigation-Buttons">
+    <div class="ButtonNav">
+        @Html.ActionLink("LEGO Bricks", "ShowLEGOBricksList", "LEGO")
     </div>
-    <div class="LEGOBricks">
-        <h1>LEGOBricks</h1>
-        <button onclick="@("window.location.href='" + @Url.Action("ShowLEGOBrickNewEdit", "LEGO") + "'");">New LEGO Brick</button>
-            <ul>
-                @foreach (var brick in ViewBag.LEGOBricks)
-                {
-                    <li class="LEGOBrickContainer">
-                        <div class="BrickInfo">
-                            @brick.Description | @brick.Color
-                        </div>
-                        <div class="ButtonContainer">
-                            <button onclick="@("window.location.href='" + @Url.Action("ShowLEGOBrickNewEdit", "LEGO") + "?id="+ brick.LEGOBrickID +"'");">Edit</button>
-                        </div>
-                    </li>
-                }
-            </ul>
-</div>
+    <div class="ButtonNav">
+        @Html.ActionLink("LEGO Sets", "ShowLEGOSetsList", "LEGO")
+    </div>
 </div>
 

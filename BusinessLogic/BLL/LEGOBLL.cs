@@ -52,6 +52,11 @@ namespace BusinessLogic.BLL
             return LEGORepository.GetLEGOBrick(id);
         }
 
+        public void DeleteLEGOBrick(int id)
+        {
+            LEGORepository.DeleteLEGOBrick(id);
+        }
+
         public List<DTOSetBrickLink> GetSetBrickLinks(DTOLEGOSet LEGOSet)
         {
             return LEGORepository.GetSetBrickLinks(LEGOSet);

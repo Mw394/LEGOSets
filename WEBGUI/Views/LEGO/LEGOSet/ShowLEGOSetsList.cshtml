@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DTO.Model.DTOLEGOSet>
+
+@{
+    ViewBag.Title = "ShowLEGOSetsList";
+}
+
+<h2>ShowLEGOSetsList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "ShowLEGOSetCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LEGOSetName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LEGOSetNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LEGOSetID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discontinued)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InStorage)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LEGOSetName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LEGOSetNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LEGOSetID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discontinued)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InStorage)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

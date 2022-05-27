@@ -7,7 +7,7 @@
 <h2>BrickTest</h2>
 
 <p>
-    @Html.ActionLink("Create New", "BrickCreate")
+    @Html.ActionLink("Create New", "ShowLEGOBrickCreate", "LEGO")
 </p>
 <table class="table">
     <tr>
@@ -35,9 +35,9 @@
             @Html.DisplayFor(modelItem => item.LEGOBrickID)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "ShowLEGOBrickEdit", new { id=item.LEGOBrickID }) |
+            @Html.ActionLink("Details", "ShowLEGOBrickDetails", new { id = item.LEGOBrickID }) |
+            @Html.ActionLink("Delete", "DeleteLEGOBrick", new { id = item.LEGOBrickID })
         </td>
     </tr>
 }

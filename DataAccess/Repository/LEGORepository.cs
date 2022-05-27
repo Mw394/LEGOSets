@@ -76,6 +76,16 @@ namespace DataAccess.Repository
             }
         }
 
+        public static void DeleteLEGOBrick(int id)
+        {
+            using (LEGODBContext ctx = new LEGODBContext())
+            {
+                var brick = ctx.LEGOBricks.Find(id);
+                ctx.LEGOBricks.Remove(brick);
+                ctx.SaveChanges();
+            }
+        }
+
         public static DTOLEGOBrick GetLEGOBrick(int id)
         {
             using (LEGODBContext ctx =new LEGODBContext())

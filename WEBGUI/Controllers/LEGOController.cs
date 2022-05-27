@@ -10,29 +10,32 @@ namespace WEBGUI.Controllers
 {
     public class LEGOController : Controller
     {
+
+
         // GET: LEGO
         public ActionResult Index()
         {
-            LEGOBLL legoBLL = new LEGOBLL();
-            List<DTOLEGOSet> legoSets = legoBLL.GetLEGOSets();
-            List<DTOLEGOBrick> legoBricks = legoBLL.GetLEGOBricks();
-            ViewBag.LEGOBricks = legoBricks;
-            ViewBag.LEGOSets = legoSets;
             return View("LEGOHome");
         }
 
-        public ActionResult ShowLEGOBrickNewEdit(int id = 0)
+        public ActionResult ShowLEGOBricksList()
         {
-            var DTOLEGOBrick = new DTOLEGOBrick();
-            ViewBag.Update = false;
-            if (id != 0)
-            {
-                LEGOBLL legoBLL = new LEGOBLL();
-                DTOLEGOBrick = legoBLL.GetLEGOBrick(id);
-                ViewBag.Update = true;
-            }
+            LEGOBLL legoBLL = new LEGOBLL();
+            List<DTOLEGOBrick> legoBricks = legoBLL.GetLEGOBricks();
+            return View("LEGOBrick/ShowLEGOBricksList", legoBricks);
+        }
 
-            return View("LEGOBrickNewEdit", DTOLEGOBrick);
+        public ActionResult ShowLEGOSetsList()
+        {
+            LEGOBLL legoBLL = new LEGOBLL();
+            List<DTOLEGOSet> legoSets = legoBLL.GetLEGOSets();
+            return View("LEGOSet/ShowLEGOSetsList", legoSets);
+        }
+
+        public ActionResult ShowLEGOBrickCreate()
+        {
+            DTOLEGOBrick newBrick = new DTOLEGOBrick();
+            return View("LEGOBrick/LEGOBrickCreate", newBrick);
         }
 
         [HttpPost]
@@ -40,11 +43,18 @@ namespace WEBGUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ShowLEGOBrickNewEdit();
+                return ShowLEGOBrickCreate();
             }
             LEGOBLL LEGOBLL = new LEGOBLL();
             LEGOBLL.AddLEGOBrick(LEGOBrick);
-            return Index();
+            return ShowLEGOBricksList();
+        }
+
+        public ActionResult ShowLEGOBrickEdit(int id) 
+        {
+            LEGOBLL bll = new LEGOBLL();
+            var brick = bll.GetLEGOBrick(id);
+            return View("LEGOBrick/LEGOBrickEdit", brick);
         }
 
         [HttpPost]
@@ -52,34 +62,31 @@ namespace WEBGUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ShowLEGOBrickNewEdit(LEGOBrick.LEGOBrickID);
+                return ShowLEGOBrickEdit(LEGOBrick.LEGOBrickID);
             }
-            LEGOBLL LEGOBLL = new LEGOBLL();
-            LEGOBLL.UpdateLEGOBrick(LEGOBrick);
-            return Index();
+            LEGOBLL bll = new LEGOBLL();
+            bll.UpdateLEGOBrick(LEGOBrick);
+            return ShowLEGOBricksList();
         }
 
-        public ActionResult ShowLEGOSetNewEdit(int id = 0)
+        public ActionResult ShowLEGOBrickDetails(int id)
         {
-            LEGOBLL LEGOBLL = new LEGOBLL();
-            var DTOLEGOSet = new DTOLEGOSet();
-            DTOLEGOSet.SetBrickLinks = new List<DTOSetBrickLink>();
-            var bricks = LEGOBLL.GetLEGOBricks();
-            ViewBag.Bricks = bricks;
-            ViewBag.Update = false;
-            List<SelectListItem> selectableItems = new List<SelectListItem>();
-            if (id != 0) { 
-            
-                DTOLEGOSet = LEGOBLL.GetLEGOSet(id);
-                List<DTOSetBrickLink> links = LEGOBLL.GetSetBrickLinks(DTOLEGOSet);
-                DTOLEGOSet.SetBrickLinks = links;
-                foreach (var link in links)
-                {
-                    selectableItems.Add(new SelectListItem { Text = link.BrickInfo, Value = link.SetBrickLinkID.ToString() });
-                }
-                ViewBag.Update = true;
-            }
-            return View("LEGOSetNewEdit", DTOLEGOSet);
+            LEGOBLL bll = new LEGOBLL();
+            var brick = bll.GetLEGOBrick(id);
+            return View("LEGOBrick/LEGOBrickDetails", brick);
+        }
+
+        public ActionResult DeleteLEGOBrick(int id)
+        {
+            var bll = new LEGOBLL();
+            bll.DeleteLEGOBrick(id);
+            return ShowLEGOBricksList();
+        }
+
+        public ActionResult ShowLEGOSetCreate()
+        {
+            DTOLEGOSet newSet = new DTOLEGOSet();
+            return View("LEGOSet/LEGOSetCreate", newSet);
         }
 
         [HttpPost]
@@ -87,23 +94,18 @@ namespace WEBGUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ShowLEGOSetNewEdit();
+                return ShowLEGOSetCreate();
             }
             LEGOBLL LEGOBLL = new LEGOBLL();
             LEGOBLL.AddLEGOSet(LEGOSet);
-            return Index();
+            return ShowLEGOSetsList();
         }
 
-        public ActionResult UpdateLEGOSet(DTOLEGOSet LEGOSet)
-        {
-            if (!ModelState.IsValid)
-            {
-                return ShowLEGOSetNewEdit(LEGOSet.LEGOSetID);
-            }
-            LEGOBLL LEGOBLL = new LEGOBLL();
-            LEGOBLL.UpdateLEGOSet(LEGOSet);
-            return Index();
-        }
+
+
+
+
+       
 
 
         public ActionResult ModalPopUp(int id = 0)
@@ -130,25 +132,6 @@ namespace WEBGUI.Controllers
             return View("ModalPopUp", DTOLEGOSet);
         }
 
-        public ActionResult ShowSetBrickLinkNewEdit(int id = 0, DTOLEGOSet DTOLEGOSet = null)
-        {
-            var DTOSetBrickLink = new DTOSetBrickLink();
-            DTOSetBrickLink.DTOLEGOSet = DTOLEGOSet;
-            return PartialView("ModalPopUp", DTOSetBrickLink);
-        }
-
-        public ActionResult BrickTest()
-        {
-            LEGOBLL legoBLL = new LEGOBLL();
-            List<DTOLEGOBrick> legoBricks = legoBLL.GetLEGOBricks();
-            ViewBag.LEGOBricks = legoBricks;
-            return View("BrickTest", legoBricks);
-        }
-
-        public ActionResult BrickCreate()
-        {
-            return PartialView("View1");
-        }
 
     }
 }

@@ -38,7 +38,6 @@ namespace DTO.Model
         public string Description { get; set; }
         [Required(ErrorMessage = "Please enter a Design Number")]
         public int DesignNumber { get; set; }
-
         public int LEGOBrickID { get; set; }
         [Required(ErrorMessage = "Please choose a color")]
         public Color Color { get; set; }
