@@ -51,10 +51,10 @@
     </div>
 }
 
-@if (!ViewBag.NEW)
+@if (!ViewBag.New)
 {
     <div>
-        @Html.ActionLink("Cancel", "ShowLEGOSetEdit", null, new { id = ViewBag.LEGOSet })
+        @Html.ActionLink(linkText: "Cancel", actionName: "ShowLEGOSetEdit", controllerName: "LEGO",routeValues: new { id = ViewBag.LEGOSet }, htmlAttributes: null)
     </div>
 }
 else

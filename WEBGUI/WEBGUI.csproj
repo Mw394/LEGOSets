@@ -171,15 +171,12 @@
     <Content Include="Views\LEGO\LEGOHome.cshtml" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
-    <Content Include="Views\LEGO\ModalPopUp.cshtml" />
     <Content Include="Views\LEGO\LEGOBrick\ShowLEGOBricksList.cshtml" />
     <Content Include="Views\LEGO\LEGOSet\ShowLEGOSetsList.cshtml" />
     <Content Include="Views\LEGO\LEGOBrick\LEGOBrickCreate.cshtml" />
     <Content Include="Views\LEGO\LEGOBrick\LEGOBrickEdit.cshtml" />
-    <Content Include="Views\LEGO\LEGOBrick\LEGOBrickDetails.cshtml" />
     <Content Include="Views\LEGO\LEGOSet\LEGOSetCreate.cshtml" />
     <Content Include="Views\LEGO\LEGOSet\LEGOSetEdit.cshtml" />
-    <Content Include="Views\LEGO\LEGOSet\LEGOSetDetails.cshtml" />
     <Content Include="Views\LEGO\LEGOSetBrickLink\SetBrickLinkCreate.cshtml" />
     <Content Include="Views\LEGO\LEGOSetBrickLink\ShowSetBrickLinkList.cshtml" />
     <Content Include="Views\LEGO\LEGOSetBrickLink\SetBrickLinkEdit.cshtml" />

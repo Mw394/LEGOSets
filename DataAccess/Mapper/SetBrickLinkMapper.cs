@@ -12,7 +12,11 @@ namespace DataAccess.Mapper
 
         public static DTO.Model.DTOSetBrickLink Map(SetBrickLink SetBrickLink)
         {
-            return new DTO.Model.DTOSetBrickLink(LEGOBrickMapper.Map(SetBrickLink.LEGOBrick), LEGOSetMapper.Map(SetBrickLink.LEGOSet), SetBrickLink.Amount, SetBrickLink.SetBrickLinkID);
+            if (SetBrickLink != null)
+            {
+                return new DTO.Model.DTOSetBrickLink(LEGOBrickMapper.Map(SetBrickLink.LEGOBrick), LEGOSetMapper.Map(SetBrickLink.LEGOSet), SetBrickLink.Amount, SetBrickLink.SetBrickLinkID);
+            }
+            return null;
         }
 
         public static SetBrickLink Map(DTO.Model.DTOSetBrickLink SetBrickLink)

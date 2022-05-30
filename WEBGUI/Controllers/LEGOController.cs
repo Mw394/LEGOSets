@@ -72,13 +72,6 @@ namespace WEBGUI.Controllers
             return ShowLEGOBricksList();
         }
 
-        public ActionResult ShowLEGOBrickDetails(int id)
-        {
-            LEGOBLL bll = new LEGOBLL();
-            var brick = bll.GetLEGOBrick(id);
-            return View("LEGOBrick/LEGOBrickDetails", brick);
-        }
-
         public ActionResult DeleteLEGOBrick(int id)
         {
             var bll = new LEGOBLL();
@@ -91,26 +84,28 @@ namespace WEBGUI.Controllers
             var newSet = this.Session["LEGOSet"] ?? new DTOLEGOSet();
             this.HttpContext.Session["LEGOSet"] = newSet;
             this.HttpContext.Session["NEW"] = true;
+            ViewBag.DetailSite = false;
             return View("LEGOSet/LEGOSetCreate", newSet);
         }
 
         [HttpPost]
         public ActionResult CreateLEGOSet(string submit, DTOLEGOSet LEGOSet)
         {
+            var links = (List<DTOSetBrickLink>)this.HttpContext.Session["links"];
             LEGOBLL LEGOBLL = new LEGOBLL();
             if (submit == "Add Brick")
             {
                 ViewBag.LEGOBricks = LEGOBLL.GetLEGOBricks();
                 ViewBag.NEW = this.Session["NEW"];
                 this.Session["LEGOSet"] = LEGOSet;
+
                 return View("LEGOSetBrickLink/SetBrickLinkCreate", new DTOSetBrickLink());
             }
             if (!ModelState.IsValid)
             {
                 return ShowLEGOSetCreate();
             }
-            var test = (List<DTOSetBrickLink>)this.HttpContext.Session["links"];
-            LEGOSet.SetBrickLinks = test;
+            LEGOSet.SetBrickLinks = links;
             LEGOBLL.AddLEGOSet(LEGOSet);
             this.Session.Clear();
             return ShowLEGOSetsList();
@@ -125,6 +120,7 @@ namespace WEBGUI.Controllers
                 ViewBag.LEGOBricks = LEGOBLL.GetLEGOBricks();
                 ViewBag.LEGOSet = LEGOSet.LEGOSetID;
                 ViewBag.NEW = this.Session["NEW"];
+                ViewBag.DetailSite = false;
                 this.Session["LEGOSet"] = LEGOSet;
                 return View("LEGOSetBrickLink/SetBrickLinkCreate", new DTOSetBrickLink());
             }
@@ -159,13 +155,6 @@ namespace WEBGUI.Controllers
             return View("LEGOset/LEGOSetEdit", set);
         }
 
-        public ActionResult ShowLEGOSetDetails(int id)
-        {
-            LEGOBLL bll = new LEGOBLL();
-            var set = bll.GetLEGOSet(id);
-            return View("LEGOSet/LEGOSetDetails", set);
-        }
-
         [HttpPost]
         public ActionResult SetBrickLinkCreate(DTOSetBrickLink setBrickLink)
         {
@@ -174,9 +163,15 @@ namespace WEBGUI.Controllers
             LEGOBLL bll = new LEGOBLL();
             setBrickLink.LEGOBrick = bll.GetLEGOBrick(setBrickLink.LEGOBrickID);
             setBrickLink.DTOLEGOSet = set;
+            if (setBrickLink.SetBrickLinkID == 0)
+            {
+                setBrickLink.SetBrickLinkID = newLinks.Count;
+            }
             newLinks.Add(setBrickLink);
             set.SetBrickLinks.AddRange(newLinks);
             this.HttpContext.Session["links"] = newLinks;
+            ViewBag.DetailSite = false;
+            ViewBag.LEGOset = set.LEGOSetID;
             if ((bool)this.Session["NEW"])
             {
                 return View("LEGOSet/LEGOSetCreate", set);
@@ -188,6 +183,11 @@ namespace WEBGUI.Controllers
         {
             LEGOBLL bll = new LEGOBLL();
             var link = bll.GetSetBrickLink(id);
+            if (link == null)
+            {
+                var newLinks = (List<DTOSetBrickLink>)this.HttpContext.Session["links"];
+                link = newLinks.Where(item => item.SetBrickLinkID == id).FirstOrDefault();
+            }
             var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
             ViewBag.LEGOBricks = bll.GetLEGOBricks();
             ViewBag.New = (bool)this.HttpContext.Session["NEW"];
@@ -206,6 +206,7 @@ namespace WEBGUI.Controllers
             set.SetBrickLinks.Add(SetBrickLink);
             this.HttpContext.Session["links"] = set.SetBrickLinks;
             ViewBag.New = (bool)this.HttpContext.Session["NEW"];
+            ViewBag.DetailSite = false;
             if ((bool)this.HttpContext.Session["NEW"])
             {
                 return View("LEGOSet/LEGOSetCreate", set);
@@ -228,38 +229,5 @@ namespace WEBGUI.Controllers
             }
             return View("LEGOSet/LEGOSetEdit", set);
         }
-
-
-        public ActionResult ModalPopUp(int id = 0)
-        {
-            LEGOBLL LEGOBLL = new LEGOBLL();
-            var DTOLEGOSet = new DTOLEGOSet();
-            DTOLEGOSet.SetBrickLinks = new List<DTOSetBrickLink>();
-            var bricks = LEGOBLL.GetLEGOBricks();
-            ViewBag.Bricks = bricks;
-            ViewBag.Update = false;
-            List<SelectListItem> selectableItems = new List<SelectListItem>();
-            if (id != 0)
-            {
-
-                DTOLEGOSet = LEGOBLL.GetLEGOSet(id);
-                List<DTOSetBrickLink> links = LEGOBLL.GetSetBrickLinks(DTOLEGOSet);
-                DTOLEGOSet.SetBrickLinks = links;
-                foreach (var link in links)
-                {
-                    selectableItems.Add(new SelectListItem { Text = link.BrickInfo, Value = link.SetBrickLinkID.ToString() });
-                }
-                ViewBag.Update = true;
-            }
-            return View("ModalPopUp", DTOLEGOSet);
-        }
-
-
-        public ActionResult Return(string viewName)
-        {
-            return View(viewName);
-        }
-
-
     }
 }
