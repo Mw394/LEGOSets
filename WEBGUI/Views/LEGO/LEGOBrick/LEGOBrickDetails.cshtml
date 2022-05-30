@@ -7,7 +7,6 @@
 <h2>LEGOBrickDetails</h2>
 
 <div>
-    <h4>DTOLEGOBrick</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -25,13 +24,8 @@
         <dd>
             @Html.DisplayFor(model => model.DesignNumber)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LEGOBrickID)
-        </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.LEGOBrickID)
+            @Html.HiddenFor(model => model.LEGOBrickID)
         </dd>
 
     </dl>

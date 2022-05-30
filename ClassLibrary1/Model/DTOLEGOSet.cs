@@ -38,8 +38,6 @@ namespace DTO.Model
         public bool InStorage { get; set; }
 
         public List<DTOSetBrickLink> SetBrickLinks { get; set; }
-
-        public bool NewObject { get; set; }
     }
 
 

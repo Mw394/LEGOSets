@@ -166,19 +166,6 @@ namespace WEBGUI.Controllers
             return View("LEGOSet/LEGOSetDetails", set);
         }
 
-        public ActionResult ShowSetBrickLinkCreate()
-        {
-            DTOSetBrickLink newLink = new DTOSetBrickLink();
-            var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
-            newLink.LEGOSetID = set.LEGOSetID;
-            newLink.DTOLEGOSet = set;
-            LEGOBLL bll = new LEGOBLL();
-            ViewBag.LEGOBricks = bll.GetLEGOBricks();
-            ViewBag.LEGOSet = set.LEGOSetID;
-            ViewBag.New = set.NewObject;
-            return View("LEGOSetBrickLink/SetBrickLinkCreate", newLink);
-        }
-
         [HttpPost]
         public ActionResult SetBrickLinkCreate(DTOSetBrickLink setBrickLink)
         {
@@ -203,7 +190,7 @@ namespace WEBGUI.Controllers
             var link = bll.GetSetBrickLink(id);
             var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
             ViewBag.LEGOBricks = bll.GetLEGOBricks();
-            ViewBag.New = set.NewObject;
+            ViewBag.New = (bool)this.HttpContext.Session["NEW"];
             ViewBag.LEGOSet = set.LEGOSetID;
             return View("LEGOSetBrickLink/SetBrickLinkEdit", link);
         }
@@ -218,8 +205,8 @@ namespace WEBGUI.Controllers
             set.SetBrickLinks.Remove(linkToRemove);
             set.SetBrickLinks.Add(SetBrickLink);
             this.HttpContext.Session["links"] = set.SetBrickLinks;
-            ViewBag.New = set.NewObject;
-            if (set.NewObject)
+            ViewBag.New = (bool)this.HttpContext.Session["NEW"];
+            if ((bool)this.HttpContext.Session["NEW"])
             {
                 return View("LEGOSet/LEGOSetCreate", set);
             }
