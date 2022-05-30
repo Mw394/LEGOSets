@@ -15,6 +15,7 @@ namespace WEBGUI.Controllers
         // GET: LEGO
         public ActionResult Index()
         {
+            this.Session.Clear();
             return View("LEGOHome");
         }
 
@@ -22,6 +23,7 @@ namespace WEBGUI.Controllers
         {
             LEGOBLL legoBLL = new LEGOBLL();
             List<DTOLEGOBrick> legoBricks = legoBLL.GetLEGOBricks();
+            this.Session.Clear();
             return View("LEGOBrick/ShowLEGOBricksList", legoBricks);
         }
 
@@ -29,6 +31,7 @@ namespace WEBGUI.Controllers
         {
             LEGOBLL legoBLL = new LEGOBLL();
             List<DTOLEGOSet> legoSets = legoBLL.GetLEGOSets();
+            this.Session.Clear();
             return View("LEGOSet/ShowLEGOSetsList", legoSets);
         }
 
@@ -85,38 +88,55 @@ namespace WEBGUI.Controllers
 
         public ActionResult ShowLEGOSetCreate()
         {
-            DTOLEGOSet newSet = new DTOLEGOSet
-            {
-                NewObject = true
-            };
+            var newSet = this.Session["LEGOSet"] ?? new DTOLEGOSet();
             this.HttpContext.Session["LEGOSet"] = newSet;
             this.HttpContext.Session["NEW"] = true;
             return View("LEGOSet/LEGOSetCreate", newSet);
         }
 
         [HttpPost]
-        public ActionResult CreateLEGOSet(DTOLEGOSet LEGOSet)
+        public ActionResult CreateLEGOSet(string submit, DTOLEGOSet LEGOSet)
         {
+            LEGOBLL LEGOBLL = new LEGOBLL();
+            if (submit == "Add Brick")
+            {
+                ViewBag.LEGOBricks = LEGOBLL.GetLEGOBricks();
+                ViewBag.NEW = this.Session["NEW"];
+                this.Session["LEGOSet"] = LEGOSet;
+                return View("LEGOSetBrickLink/SetBrickLinkCreate", new DTOSetBrickLink());
+            }
             if (!ModelState.IsValid)
             {
                 return ShowLEGOSetCreate();
             }
-            LEGOBLL LEGOBLL = new LEGOBLL();
+            var test = (List<DTOSetBrickLink>)this.HttpContext.Session["links"];
+            LEGOSet.SetBrickLinks = test;
             LEGOBLL.AddLEGOSet(LEGOSet);
+            this.Session.Clear();
             return ShowLEGOSetsList();
         }
 
         [HttpPost]
-        public ActionResult UpdateLEGOSet(DTOLEGOSet LEGOSet)
+        public ActionResult UpdateLEGOSet(string submit, DTOLEGOSet LEGOSet)
         {
+            LEGOBLL LEGOBLL = new LEGOBLL();
+            if (submit == "Add Brick")
+            {
+                ViewBag.LEGOBricks = LEGOBLL.GetLEGOBricks();
+                ViewBag.LEGOSet = LEGOSet.LEGOSetID;
+                ViewBag.NEW = this.Session["NEW"];
+                this.Session["LEGOSet"] = LEGOSet;
+                return View("LEGOSetBrickLink/SetBrickLinkCreate", new DTOSetBrickLink());
+            }
             if (!ModelState.IsValid)
             {
                 return ShowLEGOSetEdit(LEGOSet.LEGOSetID);
             }
             var links = (List<DTOSetBrickLink>)this.HttpContext.Session["links"];
+            var linksToRemove = (List<DTOSetBrickLink>)this.HttpContext.Session["linksToRemove"] ?? new List<DTOSetBrickLink>();
             LEGOSet.SetBrickLinks = links ?? new List<DTOSetBrickLink>();
-            LEGOBLL LEGOBLL = new LEGOBLL();
-            LEGOBLL.UpdateLEGOSet(LEGOSet);
+            LEGOBLL.UpdateLEGOSet(LEGOSet, linksToRemove);
+            this.Session.Clear();
             return ShowLEGOSetsList();
         }
 
@@ -133,8 +153,9 @@ namespace WEBGUI.Controllers
             var set = bll.GetLEGOSet(id);
             var links = bll.GetSetBrickLinks(set);
             set.SetBrickLinks = links;
-            set.NewObject = false;
             this.HttpContext.Session["LEGOSet"] = set;
+            this.HttpContext.Session["NEW"] = false;
+            this.HttpContext.Session["links"] = links;
             return View("LEGOset/LEGOSetEdit", set);
         }
 
@@ -145,7 +166,7 @@ namespace WEBGUI.Controllers
             return View("LEGOSet/LEGOSetDetails", set);
         }
 
-        public ActionResult ShowSetBrickLinkCreate(DTOLEGOSet LEGOSet)
+        public ActionResult ShowSetBrickLinkCreate()
         {
             DTOSetBrickLink newLink = new DTOSetBrickLink();
             var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
@@ -161,13 +182,15 @@ namespace WEBGUI.Controllers
         [HttpPost]
         public ActionResult SetBrickLinkCreate(DTOSetBrickLink setBrickLink)
         {
+            var newLinks = (List<DTOSetBrickLink>)this.HttpContext.Session["links"] ?? new List<DTOSetBrickLink>();
             var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
             LEGOBLL bll = new LEGOBLL();
             setBrickLink.LEGOBrick = bll.GetLEGOBrick(setBrickLink.LEGOBrickID);
             setBrickLink.DTOLEGOSet = set;
-            set.SetBrickLinks.Add(setBrickLink);
-            this.HttpContext.Session["links"] = set.SetBrickLinks;
-            if (set.NewObject)
+            newLinks.Add(setBrickLink);
+            set.SetBrickLinks.AddRange(newLinks);
+            this.HttpContext.Session["links"] = newLinks;
+            if ((bool)this.Session["NEW"])
             {
                 return View("LEGOSet/LEGOSetCreate", set);
             }
@@ -205,9 +228,12 @@ namespace WEBGUI.Controllers
 
         public ActionResult DeleteSetBrickLink(int id)
         {
+            var linksToRemove = (List<DTOSetBrickLink>)this.Session["linksToRemove"] ?? new List<DTOSetBrickLink>();
             var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
             var linkToRemove = set.SetBrickLinks.Where(item => item.SetBrickLinkID == id).First();
             set.SetBrickLinks.Remove(linkToRemove);
+            linksToRemove.Add(linkToRemove);
+            this.Session["linksToRemove"] = linksToRemove;
             var NEW = (bool)this.HttpContext.Session["NEW"];
             if (NEW)
             {
@@ -239,6 +265,12 @@ namespace WEBGUI.Controllers
                 ViewBag.Update = true;
             }
             return View("ModalPopUp", DTOLEGOSet);
+        }
+
+
+        public ActionResult Return(string viewName)
+        {
+            return View(viewName);
         }
 
 

@@ -37,6 +37,7 @@ namespace DTO.Model
         [Required(ErrorMessage = "Please enter a description")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Please enter a Design Number")]
+        [Range(1, int.MaxValue, ErrorMessage ="Design number cannot be 0")]
         public int DesignNumber { get; set; }
         public int LEGOBrickID { get; set; }
         [Required(ErrorMessage = "Please choose a color")]

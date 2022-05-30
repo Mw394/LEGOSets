@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DTO.Model.DTOSetBrickLink>
 
 <p>
-    @Html.ActionLink("Add LEGO Brick", "ShowSetBrickLinkCreate", "LEGO")
+    <input name="submit" type="submit" value="Add Brick" class="btn btn-default" />
 </p>
 
 <table class="table">
@@ -15,26 +15,31 @@
         <th>
             @Html.DisplayNameFor(model => model.LEGOBrick.Description)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.LEGOBrick.Color)
+        </th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LEGOBrick.DesignNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LEGOBrick.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "ShowSetBrickLinkEdit", new { id=item.SetBrickLinkID }) |
-            @Html.ActionLink("Details", "ShowSetBrickLinkDetails", new { id=item.SetBrickLinkID }) |
-            @Html.ActionLink("Delete", "DeleteSetBrickLink", new { id=item.SetBrickLinkID })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Amount)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LEGOBrick.DesignNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LEGOBrick.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LEGOBrick.Color)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "ShowSetBrickLinkEdit", new { id = item.SetBrickLinkID }) |
+        @Html.ActionLink("Details", "ShowSetBrickLinkDetails", new { id = item.SetBrickLinkID }) |
+        @Html.ActionLink("Delete", "DeleteSetBrickLink", new { id = item.SetBrickLinkID })
+    </td>
+</tr>
 }
 
 </table>

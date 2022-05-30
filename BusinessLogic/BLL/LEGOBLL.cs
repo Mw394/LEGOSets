@@ -22,9 +22,9 @@ namespace BusinessLogic.BLL
             LEGORepository.AddLEGOSet(LEGOSet);
         }
 
-        public void UpdateLEGOSet(DTOLEGOSet LEGOSet)
+        public void UpdateLEGOSet(DTOLEGOSet LEGOSet, List<DTOSetBrickLink> toRemove)
         {
-            LEGORepository.UpdateLEGOSet(LEGOSet);
+            LEGORepository.UpdateLEGOSet(LEGOSet, toRemove);
         }
 
         public void DeleteLEGOSet(int id)

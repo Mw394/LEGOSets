@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,15 +25,15 @@ namespace DTO.Model
             LEGOBrickID = lEGOBrick.LEGOBrickID;
             LEGOSetID = dTOLEGOSet.LEGOSetID;
         }
-
+        [Required]
         public int LEGOBrickID { get; set; }
-
+        [Required]
         public int LEGOSetID { get; set; }
-
         public DTOLEGOBrick LEGOBrick { get; set; }
-
         public DTOLEGOSet DTOLEGOSet { get; set; }
 
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage ="Amount must be greater than 1")]
         public int Amount { get; set; }
 
         public int SetBrickLinkID { get; set; }

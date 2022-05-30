@@ -25,18 +25,20 @@ namespace DataAccess.Repository
         {
             using (LEGODBContext ctx = new LEGODBContext())
             {
-                ctx.LEGOSets.Add(LEGOSetMapper.Map(LEGOSet));
+                var newSet = ctx.LEGOSets.Add(LEGOSetMapper.Map(LEGOSet));
+                AddSetBrickLinks(LEGOSet.SetBrickLinks, newSet, ctx);
                 ctx.SaveChanges();
             }
         }
 
-        public static void UpdateLEGOSet(DTOLEGOSet LEGOSet)
+        public static void UpdateLEGOSet(DTOLEGOSet LEGOSet, List<DTOSetBrickLink> toRemove)
         {
             using(LEGODBContext ctx = new LEGODBContext())
             {
                 var LEGOSetToUpdate = ctx.LEGOSets.Find(LEGOSet.LEGOSetID);
                 UpdateSetBrickLinks(LEGOSet.SetBrickLinks, ctx, LEGOSetToUpdate);
                 ctx.Entry(LEGOSetToUpdate).CurrentValues.SetValues(LEGOSet);
+                DeleteListOfSetBrickLinks(toRemove);
                 ctx.SaveChanges();
             }
         }
@@ -148,6 +150,34 @@ namespace DataAccess.Repository
                         ctx.SetBrickLinks.Add(newLink);
                     }
                 }
+        }
+
+        public static void DeleteListOfSetBrickLinks(List<DTOSetBrickLink> toRemove)
+        {
+            using (LEGODBContext ctx = new LEGODBContext())
+            {
+                toRemove.ForEach(item =>
+                {
+                    var link = ctx.SetBrickLinks.Find(item.SetBrickLinkID);
+                    if (link != null)
+                    {
+                        ctx.SetBrickLinks.Remove(link);
+                    }
+                });
+                ctx.SaveChanges();
+            }
+        }
+
+        public static void AddSetBrickLinks(List<DTOSetBrickLink> linksToAdd, LEGOSet newSet, LEGODBContext ctx)
+        {
+            foreach (var item in linksToAdd)
+            {
+                var brick = ctx.LEGOBricks.Find(item.LEGOBrickID);
+                var newLink = SetBrickLinkMapper.Map(item);
+                newLink.LEGOSet = newSet;
+                newLink.LEGOBrick = brick;
+                ctx.SetBrickLinks.Add(newLink);
+            }
         }
 
     }

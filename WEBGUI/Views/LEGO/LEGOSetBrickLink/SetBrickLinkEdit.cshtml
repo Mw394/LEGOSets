@@ -4,14 +4,13 @@
     ViewBag.Title = "SetBrickLinkEdit";
 }
 
-<h2>SetBrickLinkEdit</h2>
+<h2>Edit Brick & Amount</h2>
 
 @using (Html.BeginForm("UpdateSetBrickLink", "LEGO", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>DTOSetBrickLink</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -31,17 +30,15 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SetBrickLinkID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.SetBrickLinkID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.SetBrickLinkID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Name = "", @Disabled = true } })
                 @Html.ValidationMessageFor(model => model.SetBrickLinkID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LEGOSetID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.LEGOSetID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.LEGOSetID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Name = "", @Disabled = true } })
                 @Html.ValidationMessageFor(model => model.LEGOSetID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,5 +55,11 @@
 {
     <div>
         @Html.ActionLink("Cancel", "ShowLEGOSetEdit", null, new { id = ViewBag.LEGOSet })
+    </div>
+}
+else
+{
+    <div>
+        @Html.ActionLink("Cancel", "ShowLEGOSetCreate")
     </div>
 }

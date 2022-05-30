@@ -5,14 +5,13 @@
     ViewBag.Title = "View";
 }
 
-<h2>View</h2>
+<h2>New LEGO Brick</h2>
 
 @using (Html.BeginForm("CreateLEGOBrick", "LEGO", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>DTOLEGOBrick</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -26,15 +25,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DesignNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DesignNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.DesignNumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DesignNumber, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LEGOBrickID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LEGOBrickID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Name = "", @Disabled = true } })
+                @Html.HiddenFor(model => model.LEGOBrickID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Name = "", @Disabled = true } })
                 @Html.ValidationMessageFor(model => model.LEGOBrickID, "", new { @class = "text-danger" })
             </div>
         </div>
