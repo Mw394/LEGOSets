@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -26,6 +27,7 @@ namespace DataAccess.Model
 
         public string LEGOSetName { get; set; }
         public string LEGOSetNumber { get; set; }
+        [Key]
         public int LEGOSetID { get; set; }
         public bool Discontinued { get; set; }
         public bool InStorage { get; set; }

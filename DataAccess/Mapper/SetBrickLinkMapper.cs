@@ -17,7 +17,7 @@ namespace DataAccess.Mapper
 
         public static SetBrickLink Map(DTO.Model.DTOSetBrickLink SetBrickLink)
         {
-            return new SetBrickLink(LEGOSetMapper.Map(SetBrickLink.DTOLEGOSet), LEGOBrickMapper.Map(SetBrickLink.LEGOBrick), SetBrickLink.Amount);
+            return new SetBrickLink(SetBrickLink.Amount);
         }
 
         public static List<SetBrickLink> Map(List<DTO.Model.DTOSetBrickLink> SetBrickLinks)

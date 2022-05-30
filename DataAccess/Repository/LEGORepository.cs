@@ -142,8 +142,10 @@ namespace DataAccess.Repository
                         ctx.Entry(linkToUpdate).CurrentValues.SetValues(link);
                     } else
                     {
-                        link.DTOLEGOSet = LEGOSetMapper.Map(originalSet);
-                        ctx.SetBrickLinks.Add(SetBrickLinkMapper.Map(link));
+                        var newLink = SetBrickLinkMapper.Map(link);
+                        newLink.LEGOSet = originalSet;
+                        newLink.LEGOBrick = ctx.LEGOBricks.Find(link.LEGOBrickID);
+                        ctx.SetBrickLinks.Add(newLink);
                     }
                 }
         }

@@ -26,6 +26,7 @@ namespace DataAccess.DBContext
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Entity<LEGOSet>().HasMany<SetBrickLink>(item => item.SetBrickLinks);
         }
     }
 }
