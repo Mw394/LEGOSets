@@ -23,30 +23,44 @@ namespace WEBGUI.Controllers
             return View("LEGOHome");
         }
 
-        private async Task<List<DTOLEGOBrick>> GetLEGOBricks()
+        private List<DTOLEGOBrick> GetLEGOBricks()
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44372/api/LEGOAPI");
+                client.BaseAddress = new Uri("https://localhost:44372/api/LEGO/legobricks");
                 client.DefaultRequestHeaders.Clear();
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                string response = await client.GetStringAsync(client.BaseAddress);
+                string response = client.GetStringAsync("https://localhost:44372/api/LEGO/legobricks").Result;
                 List<DTOLEGOBrick> legoBricks = JsonConvert.DeserializeObject<List<DTOLEGOBrick>>(response);
                 return legoBricks;
             }
         }
 
+        private List<DTOLEGOSet> GetLEGOSets()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44372/api/LEGO/legosets");
+                client.DefaultRequestHeaders.Clear();
+                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string response = client.GetStringAsync(client.BaseAddress).Result;
+                List<DTOLEGOSet> legoSets = JsonConvert.DeserializeObject<List<DTOLEGOSet>>(response);
+                return legoSets;
+            }
+        }
+
+
+
         public ActionResult ShowLEGOBricksList()
         {
-            List<DTOLEGOBrick> legoBricks = GetLEGOBricks().Result;
+            List<DTOLEGOBrick> legoBricks = GetLEGOBricks();
             this.Session.Clear();
             return View("LEGOBrick/ShowLEGOBricksList", legoBricks);
         }
 
         public ActionResult ShowLEGOSetsList()
         {
-            LEGOBLL legoBLL = new LEGOBLL();
-            List<DTOLEGOSet> legoSets = legoBLL.GetLEGOSets();
+            List<DTOLEGOSet> legoSets = GetLEGOSets();
             this.Session.Clear();
             return View("LEGOSet/ShowLEGOSetsList", legoSets);
         }
