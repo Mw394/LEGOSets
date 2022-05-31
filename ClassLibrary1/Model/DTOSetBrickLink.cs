@@ -13,7 +13,7 @@ namespace DTO.Model
 
         public DTOSetBrickLink()
         {
-
+            NewObject = false;
         }
 
         public DTOSetBrickLink(DTOLEGOBrick lEGOBrick, DTOLEGOSet dTOLEGOSet, int amount, int setBrickLinkID)
@@ -37,6 +37,8 @@ namespace DTO.Model
         public int Amount { get; set; }
 
         public int SetBrickLinkID { get; set; }
+
+        public bool NewObject { get; set; }
 
         public string BrickInfo { get { return Amount + " | " + LEGOBrick.Description + " | " + LEGOBrick.Color; } }
     }

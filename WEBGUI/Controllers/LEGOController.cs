@@ -97,9 +97,13 @@ namespace WEBGUI.Controllers
             {
                 ViewBag.LEGOBricks = LEGOBLL.GetLEGOBricks();
                 ViewBag.NEW = this.Session["NEW"];
+                ViewBag.LEGOSet = LEGOSet;
                 this.Session["LEGOSet"] = LEGOSet;
-
-                return View("LEGOSetBrickLink/SetBrickLinkCreate", new DTOSetBrickLink());
+                var newLink = new DTOSetBrickLink
+                {
+                    NewObject = true
+                };
+                return View("LEGOSetBrickLink/SetBrickLinkCreate", newLink);
             }
             if (!ModelState.IsValid)
             {
@@ -120,9 +124,12 @@ namespace WEBGUI.Controllers
                 ViewBag.LEGOBricks = LEGOBLL.GetLEGOBricks();
                 ViewBag.LEGOSet = LEGOSet.LEGOSetID;
                 ViewBag.NEW = this.Session["NEW"];
-                ViewBag.DetailSite = false;
                 this.Session["LEGOSet"] = LEGOSet;
-                return View("LEGOSetBrickLink/SetBrickLinkCreate", new DTOSetBrickLink());
+                var newLink = new DTOSetBrickLink
+                {
+                    NewObject = true
+                };
+                return View("LEGOSetBrickLink/SetBrickLinkCreate",newLink);
             }
             if (!ModelState.IsValid)
             {
@@ -147,7 +154,7 @@ namespace WEBGUI.Controllers
         {
             LEGOBLL bll = new LEGOBLL();
             var set = bll.GetLEGOSet(id);
-            var links = bll.GetSetBrickLinks(set);
+            var links = (List<DTOSetBrickLink>)this.Session["links"] ?? bll.GetSetBrickLinks(set);
             set.SetBrickLinks = links;
             this.HttpContext.Session["LEGOSet"] = set;
             this.HttpContext.Session["NEW"] = false;
@@ -163,9 +170,9 @@ namespace WEBGUI.Controllers
             LEGOBLL bll = new LEGOBLL();
             setBrickLink.LEGOBrick = bll.GetLEGOBrick(setBrickLink.LEGOBrickID);
             setBrickLink.DTOLEGOSet = set;
-            if (setBrickLink.SetBrickLinkID == 0)
+            if (setBrickLink.NewObject)
             {
-                setBrickLink.SetBrickLinkID = newLinks.Count;
+                setBrickLink.SetBrickLinkID = newLinks.Count+1;
             }
             newLinks.Add(setBrickLink);
             set.SetBrickLinks.AddRange(newLinks);
@@ -182,12 +189,8 @@ namespace WEBGUI.Controllers
         public ActionResult ShowSetBrickLinkEdit(int id)
         {
             LEGOBLL bll = new LEGOBLL();
-            var link = bll.GetSetBrickLink(id);
-            if (link == null)
-            {
-                var newLinks = (List<DTOSetBrickLink>)this.HttpContext.Session["links"];
-                link = newLinks.Where(item => item.SetBrickLinkID == id).FirstOrDefault();
-            }
+            var sessionLinks = (List<DTOSetBrickLink>)this.HttpContext.Session["links"];
+            var link = sessionLinks.Where(item => item.SetBrickLinkID == id).FirstOrDefault();
             var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
             ViewBag.LEGOBricks = bll.GetLEGOBricks();
             ViewBag.New = (bool)this.HttpContext.Session["NEW"];
@@ -216,18 +219,25 @@ namespace WEBGUI.Controllers
 
         public ActionResult DeleteSetBrickLink(int id)
         {
-            var linksToRemove = (List<DTOSetBrickLink>)this.Session["linksToRemove"] ?? new List<DTOSetBrickLink>();
             var set = (DTOLEGOSet)this.HttpContext.Session["LEGOSet"];
             var linkToRemove = set.SetBrickLinks.Where(item => item.SetBrickLinkID == id).First();
             set.SetBrickLinks.Remove(linkToRemove);
-            linksToRemove.Add(linkToRemove);
-            this.Session["linksToRemove"] = linksToRemove;
+            UpdateLinksSessionVariable(linkToRemove);
             var NEW = (bool)this.HttpContext.Session["NEW"];
             if (NEW)
             {
                 return View("LEGOSet/LEGOSetCreate", set);
             }
             return View("LEGOSet/LEGOSetEdit", set);
+        }
+
+        public void UpdateLinksSessionVariable(DTOSetBrickLink toRemove)
+        {
+            var linksToRemove = (List<DTOSetBrickLink>)this.Session["linksToRemove"] ?? new List<DTOSetBrickLink>();
+            var links = (List<DTOSetBrickLink>)this.HttpContext.Session["links"];
+            links.Remove(toRemove);
+            linksToRemove.Add(toRemove);
+            this.Session["linksToRemove"] = linksToRemove;
         }
     }
 }

@@ -136,20 +136,24 @@ namespace DataAccess.Repository
 
         public static void UpdateSetBrickLinks(List<DTOSetBrickLink> links, LEGODBContext ctx, LEGOSet originalSet)
         {
-                foreach (DTOSetBrickLink link in links)
+            foreach (DTOSetBrickLink link in links)
+            {
+                if (link.NewObject)
+                {
+                    var newLink = SetBrickLinkMapper.Map(link);
+                    newLink.LEGOSet = originalSet;
+                    newLink.LEGOBrick = ctx.LEGOBricks.Find(link.LEGOBrickID);
+                    ctx.SetBrickLinks.Add(newLink);
+                }
+                else
                 {
                     var linkToUpdate = ctx.SetBrickLinks.Find(link.SetBrickLinkID);
                     if (linkToUpdate != null)
                     {
                         ctx.Entry(linkToUpdate).CurrentValues.SetValues(link);
-                    } else
-                    {
-                        var newLink = SetBrickLinkMapper.Map(link);
-                        newLink.LEGOSet = originalSet;
-                        newLink.LEGOBrick = ctx.LEGOBricks.Find(link.LEGOBrickID);
-                        ctx.SetBrickLinks.Add(newLink);
                     }
                 }
+            }
         }
 
         public static void DeleteListOfSetBrickLinks(List<DTOSetBrickLink> toRemove)
