@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "BrickTest";
 }
-
+<link href="~/bootstrap-5.2.0-beta1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <h2>LEGO Brick list</h2>
 
 <p>
@@ -25,25 +25,26 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Description)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DesignNumber)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.LEGOBrickID)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Color)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "ShowLEGOBrickEdit", new { id = item.LEGOBrickID }) |
-        @Html.ActionLink("Delete", "DeleteLEGOBrick", new { id = item.LEGOBrickID })
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DesignNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LEGOBrickID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "ShowLEGOBrickEdit", new { id = item.LEGOBrickID }) |
+                @Html.ActionLink("Delete", "DeleteLEGOBrick", new { id = item.LEGOBrickID })
+            </td>
+        </tr>
+    }
 
 </table>

@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using DTO.Model;
 using BusinessLogic.BLL;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace WEBGUI.Controllers
 {
@@ -19,10 +23,22 @@ namespace WEBGUI.Controllers
             return View("LEGOHome");
         }
 
+        private async Task<List<DTOLEGOBrick>> GetLEGOBricks()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44372/api/LEGOAPI");
+                client.DefaultRequestHeaders.Clear();
+                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string response = await client.GetStringAsync(client.BaseAddress);
+                List<DTOLEGOBrick> legoBricks = JsonConvert.DeserializeObject<List<DTOLEGOBrick>>(response);
+                return legoBricks;
+            }
+        }
+
         public ActionResult ShowLEGOBricksList()
         {
-            LEGOBLL legoBLL = new LEGOBLL();
-            List<DTOLEGOBrick> legoBricks = legoBLL.GetLEGOBricks();
+            List<DTOLEGOBrick> legoBricks = GetLEGOBricks().Result;
             this.Session.Clear();
             return View("LEGOBrick/ShowLEGOBricksList", legoBricks);
         }

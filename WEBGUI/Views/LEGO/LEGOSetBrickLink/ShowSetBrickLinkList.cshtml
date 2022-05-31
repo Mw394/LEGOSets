@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<DTO.Model.DTOSetBrickLink>
-
-    <p>
-        <input name="submit" type="submit" value="Add Brick" class="btn btn-default" />
-    </p>
+<link href="~/bootstrap-5.2.0-beta1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<p>
+    <input name="submit" type="submit" value="Add Brick" class="btn btn-default" />
+</p>
 
 
 <table class="table">
@@ -37,10 +37,10 @@
                 @Html.DisplayFor(modelItem => item.LEGOBrick.Color)
             </td>
 
-                <td>
-                    @Html.ActionLink("Edit", "ShowSetBrickLinkEdit", new { id = item.SetBrickLinkID }) 
-                    @Html.ActionLink("Delete", "DeleteSetBrickLink", new { id = item.SetBrickLinkID })
-                </td>
+            <td>
+                @Html.ActionLink("Edit", "ShowSetBrickLinkEdit", new { id = item.SetBrickLinkID })
+                @Html.ActionLink("Delete", "DeleteSetBrickLink", new { id = item.SetBrickLinkID })
+            </td>
 
         </tr>
     }

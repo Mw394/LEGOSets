@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "ShowLEGOSetsList";
 }
-
+<link href="~/bootstrap-5.2.0-beta1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <h2>LEGO Sets</h2>
 
 <p>
@@ -29,28 +29,29 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LEGOSetName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LEGOSetNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LEGOSetID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discontinued)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InStorage)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "ShowLEGOSetEdit", new { id=item.LEGOSetID }) |
-            @Html.ActionLink("Delete", "DeleteLEGOSet", new { id = item.LEGOSetID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LEGOSetName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LEGOSetNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LEGOSetID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discontinued)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InStorage)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "ShowLEGOSetEdit", new { id = item.LEGOSetID }) |
+                @Html.ActionLink("Delete", "DeleteLEGOSet", new { id = item.LEGOSetID })
+            </td>
+        </tr>
+    }
 
 </table>

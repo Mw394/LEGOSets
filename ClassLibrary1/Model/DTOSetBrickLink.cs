@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,7 +28,6 @@ namespace DTO.Model
         }
         [Required]
         public int LEGOBrickID { get; set; }
-        [Required]
         public int LEGOSetID { get; set; }
         public DTOLEGOBrick LEGOBrick { get; set; }
         public DTOLEGOSet DTOLEGOSet { get; set; }
@@ -40,6 +40,7 @@ namespace DTO.Model
 
         public bool NewObject { get; set; }
 
+        [JsonIgnore]
         public string BrickInfo { get { return Amount + " | " + LEGOBrick.Description + " | " + LEGOBrick.Color; } }
     }
 }
