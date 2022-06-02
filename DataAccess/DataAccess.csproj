@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Scripts\jquery-3.6.0.min.map" />
     <None Include="Scripts\jquery-3.6.0.slim.min.map" />
