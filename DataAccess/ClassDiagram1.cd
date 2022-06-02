@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DataAccess.Model.LEGOBrick">
+    <Position X="10.75" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAACAAAAAACAgAAAAAA=</HashCode>
+      <FileName>Model\LEGOBrick.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataAccess.Model.LEGOSet">
+    <Position X="3.5" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AVAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAGAAAAAAAA=</HashCode>
+      <FileName>Model\LEGOSet.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="SetBrickLinks" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DataAccess.Model.SetBrickLink">
+    <Position X="7.25" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAACAAAAAAAAAAAAAAACAQAA=</HashCode>
+      <FileName>Model\SetBrickLink.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LEGOSet" />
+      <Property Name="LEGOBrick" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
